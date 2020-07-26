@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hypoapp/app/textStyles.dart';
 
 void main() => runApp(MyApp());
 
@@ -92,7 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'HYPO',
+              style: AppTextStyles.links,
             ),
             Text(
               '$_counter',
