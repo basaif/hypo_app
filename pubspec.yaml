@@ -45,6 +45,19 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
+  assets:
+    - assets/images/app_icon.PNG
+    - assets/images/fruits_icon.png
+    - assets/images/leafy_vegetables_icon.PNG
+    - assets/images/lights_icon.png
+    - assets/images/logo-with-circle.PNG
+    - assets/images/nutrient_solution_level_icon.png
+    - assets/images/other_icon.PNG
+    - assets/images/ph_down_icon.png
+    - assets/images/ph_up_icon.png
+    - assets/images/pump_icon.PNG
+    - assets/images/water_level_icon.PNG
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
