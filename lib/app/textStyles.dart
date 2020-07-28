@@ -54,6 +54,14 @@ class AppTextStyles {
     fontFamily: "Segoe UI",
   );
 
+  static const TextStyle inputText = const TextStyle(
+    fontSize: 15,
+    color: ColorSets.darkGrey,
+    fontWeight: FontWeight.normal,
+    decoration: TextDecoration.none,
+    fontFamily: "Segoe UI",
+  );
+
   static const TextStyle bodyText = const TextStyle(
     fontSize: 14,
     color: ColorSets.grey,
