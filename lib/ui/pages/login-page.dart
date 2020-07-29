@@ -2,65 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/ui/pages/recover-password-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: ColorSets.lightGrey,
-        child: Container(
-            color: ColorSets.white,
-            margin: const EdgeInsets.all(10.0),
-            child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints viewportConstraints) {
-                  return SingleChildScrollView(
-                      child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minHeight: viewportConstraints.maxHeight,
-                          ),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                LogoWidget(),
-                                LoginForm(),
-                                LoginLinks(),
-                              ])));
-                }))));
+    return  Container(
+            color: ColorSets.lightGrey,
+            child: Container(
+                color: ColorSets.white,
+                margin: const EdgeInsets.all(10.0),
+                child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: LayoutBuilder(builder: (BuildContext context,
+                        BoxConstraints viewportConstraints) {
+                      return SingleChildScrollView(
+                          child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: viewportConstraints.maxHeight,
+                              ),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    LogoWidget(),
+                                    LoginForm(),
+                                    LoginLinks(),
+                                  ])));
+                    }))));
   }
 }
 
 class LoginLinks extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: <Widget>[
-          FlatButton(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: <Widget>[
+            FlatButton(
+              onPressed: () {
 
-            onPressed: () {
-              //TODO Link the forgot password page
-            },
-            child: Text(
-              AppStrings.forgotPassword,
-              style: AppTextStyles.links,
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
+                );
+              },
+              child: Text(
+                AppStrings.forgotPassword,
+                style: AppTextStyles.links,
+              ),
             ),
-          ),
-          FlatButton(
-
-            onPressed: () {
-              //TODO Link the sign up page
-            },
-            child: Text(
-              AppStrings.newSignUp,
-              style: AppTextStyles.links,
+            FlatButton(
+              onPressed: () {
+                //TODO Link the sign up page
+              },
+              child: Text(
+                AppStrings.newSignUp,
+                style: AppTextStyles.links,
+              ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 }
 

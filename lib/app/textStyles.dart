@@ -13,7 +13,7 @@ class AppTextStyles {
   );
 
   static const TextStyle pageHeadlines = const TextStyle(
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: FontWeight.normal,
     decoration: TextDecoration.none,
     color: ColorSets.white,
