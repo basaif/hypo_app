@@ -78,9 +78,12 @@ class AppStrings {
   static const String signUp = "Signup";
 
   //error messages
-  static const String emailEmpty = "Please enter your email address";
+  static const String emailEmpty = "Please enter a correct email address";
   static const String passwordEmpty = "Please enter your password";
   static const String firstNameEmpty = "Please enter your first name";
+  static const String lastNameEmpty = "Please enter your last name";
+  static const String confirmedPasswordEmpty = "Please confirm your password";
+
 
 
 }

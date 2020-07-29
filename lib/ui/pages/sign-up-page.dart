@@ -2,22 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
-import 'package:hypoapp/ui/pages/recover-password-page.dart';
-import 'package:hypoapp/ui/pages/sign-up-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
-class LoginPage extends StatelessWidget {
+class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            AppStrings.signUpPage,
+            style: AppTextStyles.pageHeadlines,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: ColorSets.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ), ),
+        body:Container(
             color: ColorSets.lightGrey,
             child: Container(
                 color: ColorSets.white,
                 margin: const EdgeInsets.all(10.0),
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: LayoutBuilder(builder: (BuildContext context,
-                        BoxConstraints viewportConstraints) {
+                    child: LayoutBuilder(builder:
+                        (BuildContext context, BoxConstraints viewportConstraints) {
                       return SingleChildScrollView(
                           child: ConstrainedBox(
                               constraints: BoxConstraints(
@@ -27,59 +36,22 @@ class LoginPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     LogoWidget(),
-                                    LoginForm(),
-                                    LoginLinks(),
+                                    SignUpForm(),
                                   ])));
-                    }))));
+                    })))));
   }
 }
 
-class LoginLinks extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            FlatButton(
-              onPressed: () {
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
-                );
-              },
-              child: Text(
-                AppStrings.forgotPassword,
-                style: AppTextStyles.links,
-              ),
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
-                );
-              },
-              child: Text(
-                AppStrings.newSignUp,
-                style: AppTextStyles.links,
-              ),
-            ),
-          ],
-        ));
-  }
-}
-
-class LoginForm extends StatefulWidget {
+class SignUpForm extends StatefulWidget {
   @override
-  LoginFormState createState() {
-    return LoginFormState();
+  SignUpFormState createState() {
+    return SignUpFormState();
   }
 }
 
 // Define a corresponding State class.
 // This class holds data related to the form.
-class LoginFormState extends State<LoginForm> {
+class SignUpFormState extends State<SignUpForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
@@ -96,6 +68,42 @@ class LoginFormState extends State<LoginForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               // Add TextFormFields and RaisedButton here.
+              TextFormField(
+                keyboardType: TextInputType.text,
+                // The validator receives the text that the user has entered.
+                decoration: InputDecoration(
+                  labelText: AppStrings.firstName,
+                  labelStyle: AppTextStyles.hintText,
+                ),
+
+                style: AppTextStyles.inputText,
+
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return AppStrings.firstNameEmpty;
+                  }
+                  return null;
+                },
+              ),
+
+              TextFormField(
+                keyboardType: TextInputType.text,
+                // The validator receives the text that the user has entered.
+                decoration: InputDecoration(
+                  labelText: AppStrings.lastName,
+                  labelStyle: AppTextStyles.hintText,
+                ),
+
+                style: AppTextStyles.inputText,
+
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return AppStrings.lastNameEmpty;
+                  }
+                  return null;
+                },
+              ),
+
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 // The validator receives the text that the user has entered.
@@ -114,6 +122,7 @@ class LoginFormState extends State<LoginForm> {
                   return null;
                 },
               ),
+
               TextFormField(
                 keyboardType: TextInputType.text,
                 obscureText: true,
@@ -132,6 +141,26 @@ class LoginFormState extends State<LoginForm> {
                   return null;
                 },
               ),
+
+              TextFormField(
+                keyboardType: TextInputType.text,
+                obscureText: true,
+                // The validator receives the text that the user has entered.
+                decoration: InputDecoration(
+                  labelText: AppStrings.confirmPassword,
+                  labelStyle: AppTextStyles.hintText,
+                ),
+
+                //style: AppTextStyles.inputText,
+
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return AppStrings.confirmedPasswordEmpty;
+                  }
+                  return null;
+                },
+              ),
+
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ButtonTheme(
@@ -144,13 +173,13 @@ class LoginFormState extends State<LoginForm> {
                         if (_formKey.currentState.validate()) {
                           // If the form is valid, display a snackbar. In the real world,
                           // you'd often call a server or save the information in a database.
-                          //TODO write login button logic
+                          //TODO write sign up button logic
                           Scaffold.of(context).showSnackBar(
                               SnackBar(content: Text('Processing Data')));
                         }
                       },
                       child: Text(
-                        AppStrings.login,
+                        AppStrings.signUp,
                         style: AppTextStyles.buttons,
                       ),
                       color: ColorSets.primaryGreen,
