@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
-import 'package:hypoapp/ui/pages/login-page.dart';
+import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:flutter/services.dart';
 
 class HypoApp extends StatelessWidget {
@@ -18,7 +18,7 @@ class HypoApp extends StatelessWidget {
         primarySwatch: ColorSets.primaryGreen,
       ),
       home: Scaffold(
-        body: LoginPage(),
+        body: AppSkeleton(),
       ),
     );
   }
