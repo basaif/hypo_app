@@ -42,7 +42,7 @@ class AppStrings {
 
   //monitor page body
   static const String waterLevel = "Water Level";
-  static const String NutrientSolution = "Nutrinet Solution";
+  static const String nutrientSolution = "Nutrinet Solution";
   static const String phUpBuffer = "pH Up Buffer";
   static const String phDownBuffer = "pH Down Buffer";
   static const String centimeters = "cm";
