@@ -10,5 +10,6 @@ class DeviceModel {
   int maxPhUplevel;
   int currentPhDownLevel;
   int maxPhDownLevel;
+  TrayModel currentTray;
   List<TrayModel> traysList;
 }

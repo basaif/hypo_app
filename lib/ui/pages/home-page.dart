@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/ui/pages/choose-plants-page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -51,11 +52,11 @@ class FirstTimeHomeContent extends StatelessWidget {
                 child: RaisedButton(
                   padding: EdgeInsets.all(20.0),
                   onPressed: () {
-                    // Validate returns true if the form is valid, otherwise false.
 
-                    //TODO write start growing button logic
-                    Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing Data')));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChoosePlantsPage()),
+                    );
                   },
                   child: Text(
                     AppStrings.startGrowing,

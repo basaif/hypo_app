@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReadingsModel {
+  int id;
   DateTime dateOfReading;
   TimeOfDay timeOfReading;
   ReadingType readingType;
