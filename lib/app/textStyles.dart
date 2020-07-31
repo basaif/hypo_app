@@ -85,4 +85,12 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
     decoration: TextDecoration.none,
   );
+
+  static const TextStyle languageOptions = const TextStyle(
+    fontSize: 20,
+    color: ColorSets.darkGrey,
+    fontFamily: "Segoe UI",
+    fontWeight: FontWeight.normal,
+    decoration: TextDecoration.none,
+  );
 }

@@ -39,6 +39,44 @@ class SettingsContent extends StatefulWidget {
 }
 
 class SettingsContentState extends State<SettingsContent> {
+
+  void displayBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return Container(
+            color: ColorSets.white,
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    //TODO english button action
+
+                  },
+                  child: Text(
+                    AppStrings.english,
+                    style: AppTextStyles.languageOptions,
+                  ),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    //TODO arabic button action
+
+                  },
+                  child: Text(
+                    AppStrings.arabic,
+                    style: AppTextStyles.languageOptions,
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool notificationsOn = true;
@@ -79,10 +117,9 @@ class SettingsContentState extends State<SettingsContent> {
                 trailing: Icon(
                   Icons.arrow_forward_ios,
                   color: ColorSets.primaryGreen,
+
                 ),
-                onTap: () {
-                  //TODO language list tile action
-                },
+                onTap: () =>  displayBottomSheet(context),
               )),
           Card(
               margin: EdgeInsets.only(bottom: 1, top: 0),

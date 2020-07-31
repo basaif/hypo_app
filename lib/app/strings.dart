@@ -85,6 +85,10 @@ class AppStrings {
   static const String confirmedPasswordEmpty = "Please confirm your password";
   static const String deviceCodeEmpty = "Please enter your device's code";
 
+  //languages
+  static const String english = "English";
+  static const String arabic = "العربية";
+
 
 
 }
