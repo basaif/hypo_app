@@ -46,19 +46,22 @@ class MonitorContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Card(
-
               margin: EdgeInsets.only(bottom: 30),
               elevation: 5,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Image.asset(
+
+                  Padding(
+                      padding: EdgeInsets.only(left: 25),
+                      child:Image.asset(
                     AppImages.waterLevelIcon,
                     height: 100.0,
-                  ),
-
-                  Column(
+                  )),
+                  Padding(
+                      padding: EdgeInsets.only(right: 50),
+                      child:Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
@@ -83,7 +86,8 @@ class MonitorContent extends StatelessWidget {
                         ],
                       )
                     ],
-                  )
+                  )),
+
                 ],
               ),
             ),
@@ -92,16 +96,18 @@ class MonitorContent extends StatelessWidget {
               elevation: 5,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
 
-                  Image.asset(
+                  Padding(
+                      padding: EdgeInsets.only(left: 25),
+                      child:Image.asset(
                     AppImages.nsLevelIcon,
                     height: 100.0,
-
-                  ),
-
-                  Column(
+                  )),
+                  Padding(
+                      padding: EdgeInsets.only(right: 30),
+                      child:Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
@@ -126,7 +132,8 @@ class MonitorContent extends StatelessWidget {
                         ],
                       )
                     ],
-                  )
+                  )),
+
                 ],
               ),
             ),
@@ -135,15 +142,18 @@ class MonitorContent extends StatelessWidget {
               elevation: 5,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-
+              Padding(
+              padding: EdgeInsets.only(left: 25),
+              child:
                   Image.asset(
                     AppImages.phUpIcon,
                     height: 100.0,
-                  ),
-
-                  Column(
+                  )),
+                  Padding(
+                      padding: EdgeInsets.only(right: 40),
+                      child:Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
@@ -168,7 +178,8 @@ class MonitorContent extends StatelessWidget {
                         ],
                       )
                     ],
-                  )
+                  )),
+
                 ],
               ),
             ),
@@ -177,40 +188,42 @@ class MonitorContent extends StatelessWidget {
               elevation: 5,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-
-                  Image.asset(
-                    AppImages.phDownIcon,
-                    height: 100.0,
-                  ),
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            AppStrings.phDownBuffer,
-                            style: AppTextStyles.bodyHeadlines,
-                          )),
-                      Row(
+                  Padding(
+                      padding: EdgeInsets.only(left: 25),
+                      child: Image.asset(
+                        AppImages.phDownIcon,
+                        height: 100.0,
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(right: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            phDownBuffer,
-                            style: AppTextStyles.measurementText,
-                          ),
                           Padding(
-                            padding: EdgeInsets.only(left: 4, right: 4),
-                          ),
-                          Text(
-                            AppStrings.milliliters,
-                            style: AppTextStyles.measurementText,
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                AppStrings.phDownBuffer,
+                                style: AppTextStyles.bodyHeadlines,
+                              )),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                phDownBuffer,
+                                style: AppTextStyles.measurementText,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 4, right: 4),
+                              ),
+                              Text(
+                                AppStrings.milliliters,
+                                style: AppTextStyles.measurementText,
+                              )
+                            ],
                           )
                         ],
-                      )
-                    ],
-                  )
+                      )),
                 ],
               ),
             ),
