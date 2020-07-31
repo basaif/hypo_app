@@ -1,18 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
+import 'package:hypoapp/app/strings.dart';
+import 'package:hypoapp/app/textStyles.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
         color: ColorSets.lightGrey,
         child: Container(
-            color: ColorSets.white,
+            color: ColorSets.lightGrey,
             margin: const EdgeInsets.all(10.0),
             child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: LayoutBuilder(builder: (BuildContext context,
-                    BoxConstraints viewportConstraints) {
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints viewportConstraints) {
                   return SingleChildScrollView(
                       child: ConstrainedBox(
                           constraints: BoxConstraints(
@@ -22,8 +25,149 @@ class SettingsPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 //TODO add the real settings widgets
-                                Text("settings"),
+                                SettingsContent(),
                               ])));
                 }))));
+  }
+}
+
+class SettingsContent extends StatefulWidget {
+  @override
+  SettingsContentState createState() {
+    return SettingsContentState();
+  }
+}
+
+class SettingsContentState extends State<SettingsContent> {
+  @override
+  Widget build(BuildContext context) {
+    bool notificationsOn = true;
+
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Card(
+              margin: EdgeInsets.only(bottom: 1, top: 0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.account_box,
+                  color: ColorSets.primaryGreen,
+                ),
+                title: Text(
+                  AppStrings.account,
+                  style: AppTextStyles.bodyHeadlines,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: ColorSets.primaryGreen,
+                ),
+                onTap: () {
+                  //TODO edit account list tile action
+                },
+              )),
+          Card(
+              margin: EdgeInsets.only(bottom: 1, top: 0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.language,
+                  color: ColorSets.primaryGreen,
+                ),
+                title: Text(
+                  AppStrings.language,
+                  style: AppTextStyles.bodyHeadlines,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: ColorSets.primaryGreen,
+                ),
+                onTap: () {
+                  //TODO language list tile action
+                },
+              )),
+          Card(
+              margin: EdgeInsets.only(bottom: 1, top: 0),
+              child: SwitchListTile(
+                value: notificationsOn,
+                secondary: Icon(
+                  Icons.notifications,
+                  color: ColorSets.primaryGreen,
+                ),
+                title: Text(
+                  AppStrings.pushNotifications,
+                  style: AppTextStyles.bodyHeadlines,
+                ),
+                onChanged: (value) {
+                  //TODO notifications switch action
+                  setState(() {
+                    notificationsOn = value;
+                  });
+                },
+              )),
+          Padding(
+            padding: EdgeInsets.only(top: 30),
+          ),
+          Card(
+              margin: EdgeInsets.only(bottom: 1, top: 0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.help,
+                  color: ColorSets.primaryGreen,
+                ),
+                title: Text(
+                  AppStrings.help,
+                  style: AppTextStyles.bodyHeadlines,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: ColorSets.primaryGreen,
+                ),
+                onTap: () {
+                  //TODO help list tile action
+                },
+              )),
+          Card(
+              margin: EdgeInsets.only(bottom: 1, top: 0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.info,
+                  color: ColorSets.primaryGreen,
+                ),
+                title: Text(
+                  AppStrings.about,
+                  style: AppTextStyles.bodyHeadlines,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: ColorSets.primaryGreen,
+                ),
+                onTap: () {
+                  //TODO about list tile action
+                },
+              )),
+          Padding(
+            padding: EdgeInsets.only(top: 30),
+          ),
+          Card(
+              margin: EdgeInsets.only(bottom: 1, top: 0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.close,
+                  color: ColorSets.primaryGreen,
+                ),
+                title: Text(
+                  AppStrings.logout,
+                  style: AppTextStyles.bodyHeadlines,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: ColorSets.primaryGreen,
+                ),
+                onTap: () {
+                  //TODO logout list tile action
+                },
+              )),
+        ],
+      ),
+    );
   }
 }
