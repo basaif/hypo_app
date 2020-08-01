@@ -5,7 +5,6 @@ import 'package:hypoapp/app/images.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/plant-model.dart';
-import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
 class ChoosePlantsPage extends StatelessWidget {
   @override
@@ -75,13 +74,6 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
     plants.add(PlantModel(
         3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
 
-    plants.add(PlantModel(
-        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
-    plants.add(PlantModel(
-        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
-    plants.add(PlantModel(
-        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
-
   }
 
   void createList() {
@@ -143,37 +135,42 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
   @override
   Widget build(BuildContext context) {
     return
+      SingleChildScrollView(
+        physics: ScrollPhysics(),
+    child:
     Column(
       children: <Widget>[
         ListView.builder(
-
+          physics: NeverScrollableScrollPhysics(),
           itemBuilder: _getListItemTile,
           itemCount: list.length,
           shrinkWrap: true,
 
+
         ),
         Padding(
-          padding: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.only(top: 20, bottom: 20),
             child:ButtonTheme(
           minWidth: 200.0,
           height: 70.0,
           child: RaisedButton(
             padding: EdgeInsets.all(20.0),
-            onPressed: () {
+            onPressed: list.any((item) => item.isSelected) ?  () {
                 //TODO write the real logic of the confirm button
-            },
+            } : null,
             child: Text(
               AppStrings.confirm,
               style: AppTextStyles.buttons,
             ),
-            color: list.any((item) => item.isSelected) ? ColorSets.primaryGreen : ColorSets.grey,
+            color: ColorSets.primaryGreen,
+            disabledColor: ColorSets.grey,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40.0),
             ),
           ),
         ))
       ],
-    );
+    ));
   }
 }
 
