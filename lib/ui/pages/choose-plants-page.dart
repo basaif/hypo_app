@@ -20,16 +20,17 @@ class ChoosePlantsPage extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: ColorSets.white),
             onPressed: () => Navigator.of(context).pop(),
-          ), ),
-        body:Container(
+          ),
+        ),
+        body: Container(
             color: ColorSets.lightGrey,
             child: Container(
                 color: ColorSets.white,
                 margin: const EdgeInsets.all(10.0),
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: LayoutBuilder(builder:
-                        (BuildContext context, BoxConstraints viewportConstraints) {
+                    child: LayoutBuilder(builder: (BuildContext context,
+                        BoxConstraints viewportConstraints) {
                       return SingleChildScrollView(
                           child: ConstrainedBox(
                               constraints: BoxConstraints(
@@ -40,7 +41,7 @@ class ChoosePlantsPage extends StatelessWidget {
                                   children: <Widget>[
                                     ChoosePlantContent(),
                                   ])));
-                    })))));
+                    })))), );
   }
 }
 
@@ -54,59 +55,130 @@ class ChoosePlantContent extends StatefulWidget {
 class ChoosePlantContentState extends State<ChoosePlantContent> {
   //TODO get the real plant list data
   List<PlantModel> plants = List<PlantModel>();
+  List<ListItem<PlantModel>> list = List<ListItem<PlantModel>>();
 
-  List<Card> cards = List<Card>();
 
   void initState() {
     super.initState();
     initializePlants();
-    createCards();
+    createList();
   }
 
-  void initializePlants(){
-    plants.add(PlantModel(1, "Leafy Vegetables", "Salads, artichoke, basil,\nlettuce and other herbs", AppImages.vegeiesIcon));
-    plants.add(PlantModel(2, "Fruit", "Tomatoes,\npeppers and strawberries", AppImages.fruitsIcon));
-    plants.add(PlantModel(3, "Other", "Cucumber,\nsweet corn and endives ", AppImages.otherIcon));
-}
+  void initializePlants() {
+    plants.add(PlantModel(
+        1,
+        "Leafy Vegetables",
+        "Salads, artichoke, basil, lettuce and other herbs",
+        AppImages.vegeiesIcon));
+    plants.add(PlantModel(2, "Fruit", "Tomatoes, peppers and strawberries",
+        AppImages.fruitsIcon));
+    plants.add(PlantModel(
+        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
 
-void createCards(){
-  plants.forEach((plant) {
-    cards.add(Card(
+    plants.add(PlantModel(
+        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
+    plants.add(PlantModel(
+        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
+    plants.add(PlantModel(
+        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
 
-      child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Image.asset(
-            plant.imageLocation,
-          height: 100.0,),
-
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(plant.groupName, style: AppTextStyles.bodyHeadlines),
-             Text(plant.description, style: AppTextStyles.bodyText, maxLines: 3, softWrap: false, ),
-          ],
-        )
-      ],),));
   }
-  );
-}
 
+  void createList() {
+    plants.forEach((plant) {
+      list.add(ListItem<PlantModel>(plant));
+    });
+  }
+
+
+  Widget _getListItemTile(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: () {
+      setState(() {
+        if (list.any((item) => item.isSelected)) {
+          list[index].isSelected = false;
+        }
+        else {
+          list[index].isSelected = true;
+        }
+      });
+
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 4),
+        color: list[index].isSelected ? ColorSets.primaryGreen : ColorSets.white,
+        child: Card(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Image.asset(
+                list[index].data.imageLocation,
+                height: 100.0,
+              ),
+            Flexible(
+              fit: FlexFit.loose,
+              child:Padding(padding: EdgeInsets.all(20), child:Column(
+
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(list[index].data.groupName, style: AppTextStyles.bodyHeadlines),
+                  Text(
+                    list[index].data.description,
+                    style: AppTextStyles.bodyText,
+                    overflow: TextOverflow.clip,
+                  ),
+                ],
+              ))
+            )],
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          cards[0],
-          cards[1],
-          cards[2]
-        ],
-      )
-    ,
+    return
+    Column(
+      children: <Widget>[
+        ListView.builder(
+
+          itemBuilder: _getListItemTile,
+          itemCount: list.length,
+          shrinkWrap: true,
+
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 20),
+            child:ButtonTheme(
+          minWidth: 200.0,
+          height: 70.0,
+          child: RaisedButton(
+            padding: EdgeInsets.all(20.0),
+            onPressed: () {
+                //TODO write the real logic of the confirm button
+            },
+            child: Text(
+              AppStrings.confirm,
+              style: AppTextStyles.buttons,
+            ),
+            color: list.any((item) => item.isSelected) ? ColorSets.primaryGreen : ColorSets.grey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40.0),
+            ),
+          ),
+        ))
+      ],
     );
   }
+}
+
+class ListItem<T> {
+  bool isSelected = false; //Selection property to highlight or not
+  T data; //Data of the user
+  ListItem(this.data); //Constructor to assign the data
 }
