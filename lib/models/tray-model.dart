@@ -7,4 +7,8 @@ class TrayModel{
   DateTime endDate;
   PlantModel growingPlant;
   List<ReadingsModel> growingData;
+
+  TrayModel({this.id, this.growingPlant, this.startDate,
+    this.growingData});
+
 }

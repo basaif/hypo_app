@@ -34,6 +34,7 @@ class MonitorPage extends StatelessWidget {
 class MonitorContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //TODO get real monitor data
     String waterLevel = "16";
     String nutrientSolution = "77";
     String phUpBuffer = "54";
