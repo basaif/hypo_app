@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/ui/pages/edit-account-page.dart';
 
 class SettingsPage extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +27,6 @@ class SettingsPage extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                //TODO add the real settings widgets
                                 SettingsContent(),
                               ])));
                 }))));
@@ -32,6 +34,7 @@ class SettingsPage extends StatelessWidget {
 }
 
 class SettingsContent extends StatefulWidget {
+
   @override
   SettingsContentState createState() {
     return SettingsContentState();
@@ -39,6 +42,8 @@ class SettingsContent extends StatefulWidget {
 }
 
 class SettingsContentState extends State<SettingsContent> {
+
+
 
   void displayBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -101,6 +106,11 @@ class SettingsContentState extends State<SettingsContent> {
                 ),
                 onTap: () {
                   //TODO edit account list tile action
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditAccountPage()),
+                  );
+
                 },
               )),
           Card(

@@ -7,4 +7,8 @@ class UserModel{
   String password;
   DeviceModel device;
 
+  UserModel(this.firstName, this.lastName, this.emailAddress, this.password);
+
+
+
 }
