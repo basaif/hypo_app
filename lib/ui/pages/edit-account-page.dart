@@ -3,6 +3,7 @@ import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/user-model.dart';
+import 'package:hypoapp/ui/pages/change-password-page.dart';
 
 class EditAccountPage extends StatelessWidget {
 
@@ -163,7 +164,10 @@ class EditAccountFormState extends State<EditAccountForm> {
                 child: FlatButton(
                   onPressed: () {
                     //TODO change password button action
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+                    );
                   },
                   child: Text(
                     AppStrings.changePassword,

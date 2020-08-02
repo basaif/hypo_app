@@ -66,7 +66,6 @@ class AppStrings {
   static const String password = "Password";
   static const String confirmPassword = "Confirm Password";
   static const String newPassword = "New Password";
-  static const String oldPassword = "Old Password";
 
   //buttons
   static const String saveChanges = "Save Changes";
@@ -82,6 +81,7 @@ class AppStrings {
   static const String passwordEmpty = "Please enter your password";
   static const String firstNameEmpty = "Please enter your first name";
   static const String lastNameEmpty = "Please enter your last name";
+  static const String newPasswordEmpty = "Please enter your new password";
   static const String confirmedPasswordEmpty = "Please confirm your password";
   static const String deviceCodeEmpty = "Please enter your device's code";
 
