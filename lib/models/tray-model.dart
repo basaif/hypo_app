@@ -11,4 +11,14 @@ class TrayModel{
   TrayModel({this.id, this.growingPlant, this.startDate,
     this.growingData});
 
+   List<ReadingsModel> getTypeBasedData(ReadingType readingType){
+    List<ReadingsModel> typeData = List<ReadingsModel>();
+    growingData.forEach((reading) => {
+      if (reading.readingType == readingType){
+        typeData.add(reading)
+      }
+    });
+    return typeData;
+  }
+
 }

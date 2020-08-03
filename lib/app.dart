@@ -4,6 +4,7 @@ import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:flutter/services.dart';
 
 class HypoApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     //this forces the app to be in portrait mode

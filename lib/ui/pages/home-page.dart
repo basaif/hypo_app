@@ -8,6 +8,7 @@ import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/models/readings-model.dart';
 import 'package:hypoapp/models/tray-model.dart';
 import 'package:hypoapp/ui/pages/choose-plants-page.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class HomePage extends StatelessWidget {
   @override
@@ -77,7 +78,33 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
 //                ))
 //            );
 //  }
+  List<charts.Series<ReadingsModel, DateTime>> seriesList = List<charts.Series<ReadingsModel, DateTime>>();
+  void populateSeriesList(){
 
+    seriesList.add(new
+    charts.Series<ReadingsModel, DateTime>(
+        id: 'Growth',
+        data: tray.getTypeBasedData(ReadingType.pH),
+        //x axis
+        domainFn: (ReadingsModel readings, _) => readings.dateOfReading,
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        //y axis
+        measureFn: (ReadingsModel readings, _) => readings.value,),
+
+    );
+
+    seriesList.add(new
+    charts.Series<ReadingsModel, DateTime>(
+      id: 'Growth',
+      data: tray.getTypeBasedData(ReadingType.EC),
+      //x axis
+      domainFn: (ReadingsModel readings, _) => readings.dateOfReading,
+      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+      //y axis
+      measureFn: (ReadingsModel readings, _) => readings.value,),
+
+    );
+  }
   @override
   Widget build(BuildContext context) {
 //    return SingleChildScrollView(
@@ -93,6 +120,7 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
 //
 //    )],));
 
+    populateSeriesList();
     return Container(
         child: Padding(
             padding: EdgeInsets.all(2),
@@ -156,6 +184,17 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                       ],
                     ),
                   ),
+                  Card(
+                    child:
+                    ConstrainedBox(
+                      constraints: BoxConstraints.tight(Size(320, 270)),
+                        child: charts.TimeSeriesChart(
+                          seriesList,
+                          animate: true,
+                        ),
+
+
+                  )),
                 ])));
   }
 }

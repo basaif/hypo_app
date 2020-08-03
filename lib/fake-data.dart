@@ -14,9 +14,9 @@ import 'models/readings-model.dart';
 
     DateTime date = DateTime(2020, 6, 1);
     Random random = Random(3);
-    for(int i = 0; i < 62; i++){
+    for(int i = 0; i < 5; i++){
 
-      for(int j = 0; j < 24; j++){
+      for(int j = 0; j < 2; j++){
         readings.add(ReadingsModel(
             id: i*j,
             dateOfReading: date,
@@ -31,9 +31,9 @@ import 'models/readings-model.dart';
             readingType: ReadingType.pH,
             value: roundDouble((random.nextDouble() * 10.0), 1)
         ));
-
+        date = date.add(Duration(hours: 1));
       }
-      date = date.add(Duration(days: 1));
+
 
     }
 
