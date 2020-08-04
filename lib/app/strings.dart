@@ -29,10 +29,11 @@ class AppStrings {
 
   static const String ph = "pH";
   static const String ec = "EC";
-  static const String hours = "h";
-  static const String days = "d";
-  static const String weeks = "w";
-  static const String months = "m";
+  static const String sixHours = "6h";
+  static const String twelveHours = "12h";
+  static const String day = "d";
+  static const String week = "w";
+
 
   static const String noGrowingCycleMessage = "You don't have any plants growing yet. Press the start growing button to beign";
 

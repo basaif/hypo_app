@@ -72,6 +72,14 @@ class AppTextStyles {
 
   static const TextStyle highlightedBodyText = const TextStyle(
     fontSize: 14,
+    color: ColorSets.white,
+    fontFamily: "Segoe UI",
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle nonHighlightedBodyText = const TextStyle(
+    fontSize: 14,
     color: ColorSets.primaryGreen,
     fontFamily: "Segoe UI",
     fontWeight: FontWeight.normal,

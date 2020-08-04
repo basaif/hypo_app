@@ -14,22 +14,20 @@ import 'models/readings-model.dart';
 
     DateTime date = DateTime(2020, 6, 1);
     Random random = Random(3);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 65; i++){
 
-      for(int j = 0; j < 2; j++){
+      for(int j = 0; j < 24; j++){
         readings.add(ReadingsModel(
             id: i*j,
             dateOfReading: date,
-            timeOfReading: TimeOfDay(hour: j, minute: 0),
             readingType: ReadingType.EC,
-            value: roundDouble((random.nextDouble() * 10.0), 1)
+            value: roundDouble((random.nextDouble() * 2.0), 1)
         ));
         readings.add(ReadingsModel(
             id: i+j,
             dateOfReading: date,
-            timeOfReading: TimeOfDay(hour: j, minute: 0),
             readingType: ReadingType.pH,
-            value: roundDouble((random.nextDouble() * 10.0), 1)
+            value: roundDouble((random.nextDouble() * 2.0), 1)
         ));
         date = date.add(Duration(hours: 1));
       }

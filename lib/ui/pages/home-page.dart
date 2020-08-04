@@ -78,33 +78,69 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
 //                ))
 //            );
 //  }
-  List<charts.Series<ReadingsModel, DateTime>> seriesList = List<charts.Series<ReadingsModel, DateTime>>();
-  void populateSeriesList(){
+  List<charts.Series<ReadingsModel, DateTime>> seriesList =
+      List<charts.Series<ReadingsModel, DateTime>>();
 
-    seriesList.add(new
-    charts.Series<ReadingsModel, DateTime>(
-        id: 'Growth',
+  List<charts.Series<ReadingsModel, DateTime>> activeSeriesList =
+      List<charts.Series<ReadingsModel, DateTime>>();
+  void populateSeriesList() {
+    seriesList.add(
+      new charts.Series<ReadingsModel, DateTime>(
+        id: 'pH',
         data: tray.getTypeBasedData(ReadingType.pH),
         //x axis
         domainFn: (ReadingsModel readings, _) => readings.dateOfReading,
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         //y axis
-        measureFn: (ReadingsModel readings, _) => readings.value,),
-
+        measureFn: (ReadingsModel readings, _) => readings.value,
+      ),
     );
 
-    seriesList.add(new
-    charts.Series<ReadingsModel, DateTime>(
-      id: 'Growth',
-      data: tray.getTypeBasedData(ReadingType.EC),
-      //x axis
-      domainFn: (ReadingsModel readings, _) => readings.dateOfReading,
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-      //y axis
-      measureFn: (ReadingsModel readings, _) => readings.value,),
-
+    seriesList.add(
+      new charts.Series<ReadingsModel, DateTime>(
+        id: 'EC',
+        data: tray.getTypeBasedData(ReadingType.EC),
+        //x axis
+        domainFn: (ReadingsModel readings, _) => readings.dateOfReading,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        //y axis
+        measureFn: (ReadingsModel readings, _) => readings.value,
+      ),
     );
   }
+
+  bool isEcButtonActive;
+  bool isPhButtonActive;
+
+  bool isSixHButtonActive;
+  bool isTwelveHButtonActive;
+  bool isDayButtonActive;
+  bool isWeekButtonActive;
+
+  DateTime startDate;
+  DateTime endDate;
+
+  DateTime lastReading;
+
+  void initState() {
+    super.initState();
+
+    lastReading = tray.growingData[tray.growingData.length - 1].dateOfReading;
+
+    isEcButtonActive = false;
+    isPhButtonActive = true;
+
+    isSixHButtonActive = true;
+    isTwelveHButtonActive = false;
+    isDayButtonActive = false;
+    isWeekButtonActive = false;
+
+    populateSeriesList();
+    activeSeriesList = seriesList.sublist(0, 1);
+    startDate = lastReading.subtract(Duration(hours: 6));
+    endDate = lastReading;
+  }
+
   @override
   Widget build(BuildContext context) {
 //    return SingleChildScrollView(
@@ -120,12 +156,11 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
 //
 //    )],));
 
-    populateSeriesList();
     return Container(
         child: Padding(
             padding: EdgeInsets.all(2),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start ,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Card(
@@ -142,59 +177,261 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                               height: 100.0,
                             )),
                         Flexible(
-                          fit: FlexFit.loose,
-                          child:Padding(padding: EdgeInsets.all(20), child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.only(bottom: 5 , top: 5),
-                                child: Text(
-                                  tray.growingPlant.groupName,
-                                  style: AppTextStyles.bodyHeadlines,
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(bottom: 2),
-                                child: Text(
-                                  AppStrings.startDate +
-                                      tray.startDate.day.toString()+"-"+tray.startDate.month.toString()+"-"+tray.startDate.year.toString(),
-                                  style: AppTextStyles.bodyText,
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(bottom: 2),
-                                child: Text(
-                                  AppStrings.daysPassed +
-                                      (DateTime.now()
-                                              .difference(tray.startDate))
-                                          .inDays.toString(),
-                                  style: AppTextStyles.bodyText,
-                                )),
-                            Padding(
-                              padding: EdgeInsets.all(0),
-                              child: FlatButton(
-                                onPressed: () {},
-                                child: Text(
-                                  AppStrings.endCycle,
-                                  style: AppTextStyles.links,
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ))),
+                            fit: FlexFit.loose,
+                            child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                        padding:
+                                            EdgeInsets.only(bottom: 5, top: 5),
+                                        child: Text(
+                                          tray.growingPlant.groupName,
+                                          style: AppTextStyles.bodyHeadlines,
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(bottom: 2),
+                                        child: Text(
+                                          AppStrings.startDate +
+                                              tray.startDate.day.toString() +
+                                              "-" +
+                                              tray.startDate.month.toString() +
+                                              "-" +
+                                              tray.startDate.year.toString(),
+                                          style: AppTextStyles.bodyText,
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(bottom: 2),
+                                        child: Text(
+                                          AppStrings.daysPassed +
+                                              (DateTime.now().difference(
+                                                      tray.startDate))
+                                                  .inDays
+                                                  .toString(),
+                                          style: AppTextStyles.bodyText,
+                                        )),
+                                    Padding(
+                                      padding: EdgeInsets.all(0),
+                                      child: FlatButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          AppStrings.endCycle,
+                                          style: AppTextStyles.links,
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ))),
                       ],
                     ),
                   ),
                   Card(
-                    child:
-                    ConstrainedBox(
-                      constraints: BoxConstraints.tight(Size(320, 270)),
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                activeSeriesList = seriesList.sublist(0, 1);
+                                isPhButtonActive = true;
+                                isEcButtonActive = false;
+                              });
+                            },
+                            child: Text(
+                              AppStrings.ph,
+                              style: isPhButtonActive
+                                  ? AppTextStyles.highlightedBodyText
+                                  : AppTextStyles.nonHighlightedBodyText,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                side:
+                                    BorderSide(color: ColorSets.primaryGreen)),
+                            color: isPhButtonActive
+                                ? ColorSets.primaryGreen
+                                : ColorSets.white,
+                            elevation: 0,
+                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                activeSeriesList = seriesList.sublist(1, 2);
+                                isPhButtonActive = false;
+                                isEcButtonActive = true;
+                              });
+                            },
+                            child: Text(
+                              AppStrings.ec,
+                              style: isEcButtonActive
+                                  ? AppTextStyles.highlightedBodyText
+                                  : AppTextStyles.nonHighlightedBodyText,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                side:
+                                    BorderSide(color: ColorSets.primaryGreen)),
+                            color: isEcButtonActive
+                                ? ColorSets.primaryGreen
+                                : ColorSets.white,
+                            elevation: 0,
+                          ),
+                        ],
+                      ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints.tight(Size(320, 270)),
                         child: charts.TimeSeriesChart(
-                          seriesList,
-                          animate: true,
+                          activeSeriesList,
+                          animate: false,
+
+                          domainAxis: new charts.DateTimeAxisSpec(
+                              // Set the initial viewport by providing a new AxisSpec with the
+                              // desired viewport, in NumericExtents.
+                              viewport: new charts.DateTimeExtents(
+                                  start: startDate, end: endDate)),
+
+                          // Optionally add a pan or pan and zoom behavior.
+                          // If pan/zoom is not added, the viewport specified remains the viewport.
+                          behaviors: [new charts.PanAndZoomBehavior()],
                         ),
-
-
+                      )
+                    ],
                   )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      ButtonTheme(
+                          minWidth: 80,
+                          padding: EdgeInsetsDirectional.only(start: 0, end: 0),
+                          child: RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                isSixHButtonActive = true;
+                                isTwelveHButtonActive = false;
+                                isDayButtonActive = false;
+                                isWeekButtonActive = false;
+
+                                startDate = lastReading.subtract(Duration(hours: 6));
+                              });
+                            },
+                            child: Text(
+                              AppStrings.sixHours,
+                              style: isSixHButtonActive
+                                  ? AppTextStyles.highlightedBodyText
+                                  : AppTextStyles.nonHighlightedBodyText,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(50),
+                                    bottomLeft: Radius.circular(50)),
+                                side:
+                                    BorderSide(color: ColorSets.primaryGreen)),
+                            color: isSixHButtonActive
+                                ? ColorSets.primaryGreen
+                                : ColorSets.white,
+                            elevation: 0,
+                          )),
+                      ButtonTheme(
+                          minWidth: 80,
+                          padding: EdgeInsetsDirectional.only(start: 0, end: 0),
+                          child: RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                isSixHButtonActive = false;
+                                isTwelveHButtonActive = true;
+                                isDayButtonActive = false;
+                                isWeekButtonActive = false;
+
+                                startDate = lastReading.subtract(Duration(hours: 12));
+                              });
+                            },
+                            child: Text(
+                              AppStrings.twelveHours,
+                              style: isTwelveHButtonActive
+                                  ? AppTextStyles.highlightedBodyText
+                                  : AppTextStyles.nonHighlightedBodyText,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.horizontal(
+                                    left: Radius.zero, right: Radius.zero),
+                                side:
+                                    BorderSide(color: ColorSets.primaryGreen)),
+                            color: isTwelveHButtonActive
+                                ? ColorSets.primaryGreen
+                                : ColorSets.white,
+                            elevation: 0,
+                          )),
+                      ButtonTheme(
+                          minWidth: 80,
+                          padding: EdgeInsetsDirectional.only(start: 0, end: 0),
+                          child: RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                isSixHButtonActive = false;
+                                isTwelveHButtonActive = false;
+                                isDayButtonActive = true;
+                                isWeekButtonActive = false;
+
+                                startDate = lastReading.subtract(Duration(days: 1));
+                              });
+                            },
+                            child: Text(
+                              AppStrings.day,
+                              style: isDayButtonActive
+                                  ? AppTextStyles.highlightedBodyText
+                                  : AppTextStyles.nonHighlightedBodyText,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.horizontal(
+                                    left: Radius.zero, right: Radius.zero),
+                                side:
+                                    BorderSide(color: ColorSets.primaryGreen)),
+                            color: isDayButtonActive
+                                ? ColorSets.primaryGreen
+                                : ColorSets.white,
+                            elevation: 0,
+                          )),
+                      ButtonTheme(
+                          minWidth: 80,
+                          padding: EdgeInsetsDirectional.only(start: 0, end: 0),
+                          child: RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                isSixHButtonActive = false;
+                                isTwelveHButtonActive = false;
+                                isDayButtonActive = false;
+                                isWeekButtonActive = true;
+
+                                startDate = lastReading.subtract(Duration(days: 7));
+                              });
+                            },
+                            child: Text(
+                              AppStrings.week,
+                              style: isWeekButtonActive
+                                  ? AppTextStyles.highlightedBodyText
+                                  : AppTextStyles.nonHighlightedBodyText,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(50),
+                                    bottomRight: Radius.circular(50)),
+                                side:
+                                    BorderSide(color: ColorSets.primaryGreen)),
+                            color: isWeekButtonActive
+                                ? ColorSets.primaryGreen
+                                : ColorSets.white,
+                            elevation: 0,
+                          )),
+                    ],
+                  ),
                 ])));
   }
 }
