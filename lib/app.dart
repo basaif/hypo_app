@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:flutter/services.dart';
+import 'package:hypoapp/ui/pages/login-page.dart';
 
 class HypoApp extends StatelessWidget {
+  final bool isUserLoggedIn;
+  HypoApp(this.isUserLoggedIn);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class HypoApp extends StatelessWidget {
         primarySwatch: ColorSets.primaryGreen,
       ),
       home: Scaffold(
-        body: AppSkeleton(),
+        body: isUserLoggedIn ? AppSkeleton() : LoginPage(),
       ),
     );
   }

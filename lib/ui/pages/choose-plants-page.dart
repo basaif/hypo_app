@@ -157,6 +157,7 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
             padding: EdgeInsets.all(20.0),
             onPressed: list.any((item) => item.isSelected) ?  () {
                 //TODO write the real logic of the confirm button
+              Navigator.of(context).pop(true);
             } : null,
             child: Text(
               AppStrings.confirm,
