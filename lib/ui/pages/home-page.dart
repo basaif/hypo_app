@@ -298,7 +298,7 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
 
                           // Optionally add a pan or pan and zoom behavior.
                           // If pan/zoom is not added, the viewport specified remains the viewport.
-                          behaviors: [new charts.PanAndZoomBehavior()],
+                          behaviors: [new charts.PanBehavior()],
                         ),
                       )
                     ],
