@@ -10,12 +10,10 @@ import 'package:hypoapp/models/tray-model.dart';
 import 'package:hypoapp/ui/pages/choose-plants-page.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'package:hypoapp/global-data.dart' as appState;
 
 
 class HomePage extends StatelessWidget {
-  bool isActive;
-
-  HomePage(this.isActive);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,30 +35,29 @@ class HomePage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                 //TODO add the real home widgets
-                                Content(isActive),
+                                Content(),
                               ]))));
                 }))));
   }
 }
 
-class Content extends StatefulWidget{
-  bool isActive;
-  Content(this.isActive);
+class Content extends StatefulWidget {
   @override
   ContentState createState() {
-    return ContentState(this.isActive);
+    return ContentState();
   }
-
 }
 
-class ContentState extends State<Content>{
-  bool isActive;
-  ContentState(this.isActive);
+class ContentState extends State<Content> {
+  @override
+  void initState() {
+    super.initState();
+    //TODO: implement the initial state of ContentState
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return isActive ? ActiveHomeContent() : FirstTimeHomeContent();
+    return appState.isGrowing ? ActiveHomeContent() : FirstTimeHomeContent();
   }
 }
 
@@ -345,7 +342,8 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                                 isDayButtonActive = false;
                                 isWeekButtonActive = false;
 
-                                startDate = lastReading.subtract(Duration(hours: 6));
+                                startDate =
+                                    lastReading.subtract(Duration(hours: 6));
                               });
                             },
                             child: Text(
@@ -376,7 +374,8 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                                 isDayButtonActive = false;
                                 isWeekButtonActive = false;
 
-                                startDate = lastReading.subtract(Duration(hours: 12));
+                                startDate =
+                                    lastReading.subtract(Duration(hours: 12));
                               });
                             },
                             child: Text(
@@ -406,7 +405,8 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                                 isDayButtonActive = true;
                                 isWeekButtonActive = false;
 
-                                startDate = lastReading.subtract(Duration(days: 1));
+                                startDate =
+                                    lastReading.subtract(Duration(days: 1));
                               });
                             },
                             child: Text(
@@ -436,7 +436,8 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                                 isDayButtonActive = false;
                                 isWeekButtonActive = true;
 
-                                startDate = lastReading.subtract(Duration(days: 7));
+                                startDate =
+                                    lastReading.subtract(Duration(days: 7));
                               });
                             },
                             child: Text(
@@ -471,7 +472,7 @@ class FirstTimeHomeContent extends StatefulWidget {
 
 class FirstTimeHomeContentState extends State<FirstTimeHomeContent> {
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Container(
       child: Center(
         child: Column(
@@ -488,15 +489,12 @@ class FirstTimeHomeContentState extends State<FirstTimeHomeContent> {
                 height: 70.0,
                 child: RaisedButton(
                   padding: EdgeInsets.all(20.0),
-                  onPressed: () async {
-                    final bool result = await Navigator.push(
+                  onPressed: () {
+                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChoosePlantsPage()),
                     );
-                    setState(() {
-Content(result);
-                    });
                   },
                   child: Text(
                     AppStrings.startGrowing,

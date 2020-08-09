@@ -3,6 +3,7 @@ import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/user-model.dart';
+import 'package:hypoapp/resources/validators.dart';
 import 'package:hypoapp/ui/pages/change-password-page.dart';
 
 class EditAccountPage extends StatelessWidget {
@@ -125,8 +126,9 @@ class EditAccountFormState extends State<EditAccountForm> {
                 initialValue: user.emailAddress,
                 validator: (value) {
                   //TODO write real email validation logic
-                  if (value.isEmpty) {
-                    return AppStrings.emailEmpty;
+                  bool isEmailCorrect = Validator.validateEmail(value);
+                  if (!isEmailCorrect) {
+                    return AppStrings.emailError;
                   }
                   return null;
                 },

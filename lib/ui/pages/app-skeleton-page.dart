@@ -37,7 +37,7 @@ class _AppSkeletonState extends State<AppSkeleton> {
   ];
 
   static List<Widget> _contentWidgets = <Widget>[
-    HomePage(false),
+    HomePage(),
     MonitorPage(),
     ControlPage(),
     SettingsPage(),

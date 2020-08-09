@@ -6,6 +6,8 @@ import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/plant-model.dart';
 
+import 'package:hypoapp/global-data.dart' as appState;
+
 class ChoosePlantsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -157,7 +159,11 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
             padding: EdgeInsets.all(20.0),
             onPressed: list.any((item) => item.isSelected) ?  () {
                 //TODO write the real logic of the confirm button
-              Navigator.of(context).pop(true);
+              setState(() {
+                appState.isGrowing = true;
+              });
+
+              Navigator.of(context).pop();
             } : null,
             child: Text(
               AppStrings.confirm,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/resources/validators.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -57,7 +58,13 @@ class SignUpFormState extends State<SignUpForm> {
   //
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
+
   final _formKey = GlobalKey<FormState>();
+
+  String firstName;
+  String lastName;
+  String email;
+  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +89,9 @@ class SignUpFormState extends State<SignUpForm> {
                   if (value.isEmpty) {
                     return AppStrings.firstNameEmpty;
                   }
+                  else{
+                    firstName = value;
+                  }
                   return null;
                 },
               ),
@@ -100,6 +110,9 @@ class SignUpFormState extends State<SignUpForm> {
                   if (value.isEmpty) {
                     return AppStrings.lastNameEmpty;
                   }
+                  else{
+                    lastName = value;
+                  }
                   return null;
                 },
               ),
@@ -116,8 +129,12 @@ class SignUpFormState extends State<SignUpForm> {
 
                 validator: (value) {
                   //TODO write real email validation logic
-                  if (value.isEmpty) {
-                    return AppStrings.emailEmpty;
+                  bool isEmailCorrect = Validator.validateEmail(value);
+                  if (!isEmailCorrect) {
+                    return AppStrings.emailError;
+                  }
+                  else{
+                    email = value;
                   }
                   return null;
                 },
@@ -138,6 +155,9 @@ class SignUpFormState extends State<SignUpForm> {
                   if (value.isEmpty) {
                     return AppStrings.passwordEmpty;
                   }
+                  else{
+                    password = value;
+                  }
                   return null;
                 },
               ),
@@ -156,6 +176,12 @@ class SignUpFormState extends State<SignUpForm> {
                 validator: (value) {
                   if (value.isEmpty) {
                     return AppStrings.confirmedPasswordEmpty;
+                  }
+                  else if (!Validator.confirmPassword(password, value)){
+                    return AppStrings.confirmPasswordError;
+                  }
+                  else{
+                    password = value;
                   }
                   return null;
                 },

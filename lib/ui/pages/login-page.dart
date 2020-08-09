@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/resources/validators.dart';
 import 'package:hypoapp/ui/pages/recover-password-page.dart';
 import 'package:hypoapp/ui/pages/sign-up-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
@@ -108,8 +109,9 @@ class LoginFormState extends State<LoginForm> {
 
                 validator: (value) {
                   //TODO write real email validation logic
-                  if (value.isEmpty) {
-                    return AppStrings.emailEmpty;
+                  bool isEmailCorrect = Validator.validateEmail(value);
+                  if (!isEmailCorrect) {
+                    return AppStrings.emailError;
                   }
                   return null;
                 },
