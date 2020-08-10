@@ -3,6 +3,7 @@ import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/images.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/models/device-model.dart';
 
 class ControlPage extends StatelessWidget {
   @override
@@ -66,7 +67,12 @@ class ControlContent extends StatelessWidget {
                             child: RaisedButton(
                               padding: EdgeInsets.all(5.0),
                               onPressed: () {
-                                // TODO write the real on/off button logic for water pump
+                                if (!DeviceModel.changeWaterPumpState()) {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(AppStrings.generalError),
+                                    duration: Duration(seconds: 3),
+                                  ));
+                                }
                               },
                               child: Text(
                                 AppStrings.turnOnOff,
@@ -110,7 +116,12 @@ class ControlContent extends StatelessWidget {
                             child: RaisedButton(
                               padding: EdgeInsets.all(5.0),
                               onPressed: () {
-                                // TODO write the real on/off button logic for lights
+                                if (!DeviceModel.changeLightsState()) {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(AppStrings.generalError),
+                                    duration: Duration(seconds: 3),
+                                  ));
+                                }
                               },
                               child: Text(
                                 AppStrings.turnOnOff,

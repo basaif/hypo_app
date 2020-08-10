@@ -3,6 +3,7 @@ import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/images.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/models/device-model.dart';
 
 class MonitorPage extends StatelessWidget {
   @override
@@ -33,11 +34,13 @@ class MonitorPage extends StatelessWidget {
 class MonitorContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //TODO get real monitor data
-    String waterLevel = "16";
-    String nutrientSolution = "77";
-    String phUpBuffer = "54";
-    String phDownBuffer = "12";
+
+    DeviceModel.getMeasurements();
+
+    String waterLevel = DeviceModel.currentDevice.currentWaterLevel.toString();
+    String nutrientSolution = DeviceModel.currentDevice.currentNSLevel.toString();
+    String phUpBuffer = DeviceModel.currentDevice.currentPhUpLevel.toString();
+    String phDownBuffer = DeviceModel.currentDevice.currentPhDownLevel.toString();
 
     return Container(
       child: Padding(
