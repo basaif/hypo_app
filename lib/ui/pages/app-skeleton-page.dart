@@ -55,6 +55,7 @@ class _AppSkeletonState extends State<AppSkeleton> {
       appBar: AppBar(
         title: _titles.elementAt(_selectedIndex),
         centerTitle: true,
+        leading: Container(),
       ),
       body: Center(
         child: _contentWidgets.elementAt(_selectedIndex),

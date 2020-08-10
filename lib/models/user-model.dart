@@ -9,4 +9,9 @@ class UserModel {
 
   UserModel(this.firstName, this.lastName, this.emailAddress, this.password);
 
+  static bool login(String email, String password){
+    //TODO: implement login
+    return true;
+  }
+
 }

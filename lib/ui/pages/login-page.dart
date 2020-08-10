@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/resources/validators.dart';
+import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:hypoapp/ui/pages/recover-password-page.dart';
 import 'package:hypoapp/ui/pages/sign-up-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
@@ -88,6 +90,9 @@ class LoginFormState extends State<LoginForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -108,10 +113,12 @@ class LoginFormState extends State<LoginForm> {
                 style: AppTextStyles.inputText,
 
                 validator: (value) {
-                  //TODO write real email validation logic
                   bool isEmailCorrect = Validator.validateEmail(value);
                   if (!isEmailCorrect) {
                     return AppStrings.emailError;
+                  }
+                  else{
+                    email = value;
                   }
                   return null;
                 },
@@ -131,6 +138,9 @@ class LoginFormState extends State<LoginForm> {
                   if (value.isEmpty) {
                     return AppStrings.passwordEmpty;
                   }
+                  else{
+                    password = value;
+                  }
                   return null;
                 },
               ),
@@ -144,11 +154,12 @@ class LoginFormState extends State<LoginForm> {
                       onPressed: () {
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          //TODO write login button logic
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')));
+                            if (UserModel.login(email, password)){
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => AppSkeleton()),
+                              );
+                            }
                         }
                       },
                       child: Text(
