@@ -63,8 +63,11 @@ class EditAccountFormState extends State<EditAccountForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
-  //TODO get real user data
-  UserModel user = UserModel("John", "Joe", "john.doe@example.com", "jj79xyz");
+  UserModel user = UserModel.currentUser;
+
+  String firstName;
+  String lastName;
+  String email;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +95,9 @@ class EditAccountFormState extends State<EditAccountForm> {
                   if (value.isEmpty) {
                     return AppStrings.firstNameEmpty;
                   }
+                  else{
+                    firstName = value;
+                  }
                   return null;
                 },
               ),
@@ -110,6 +116,9 @@ class EditAccountFormState extends State<EditAccountForm> {
                   if (value.isEmpty) {
                     return AppStrings.lastNameEmpty;
                   }
+                  else{
+                    lastName = value;
+                  }
                   return null;
                 },
               ),
@@ -125,10 +134,13 @@ class EditAccountFormState extends State<EditAccountForm> {
                 style: AppTextStyles.inputText,
                 initialValue: user.emailAddress,
                 validator: (value) {
-                  //TODO write real email validation logic
+
                   bool isEmailCorrect = Validator.validateEmail(value);
                   if (!isEmailCorrect) {
                     return AppStrings.emailError;
+                  }
+                  else{
+                    email = value;
                   }
                   return null;
                 },
@@ -145,11 +157,9 @@ class EditAccountFormState extends State<EditAccountForm> {
                       onPressed: () {
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          //TODO write save changes button logic
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')));
+                          if(UserModel.editUserInfo(firstName, lastName, email)){
+                            Navigator.of(context).pop();
+                          }
                         }
                       },
                       child: Text(
@@ -165,7 +175,6 @@ class EditAccountFormState extends State<EditAccountForm> {
               Padding(padding: EdgeInsets.only(bottom: 20, top: 20),
                 child: FlatButton(
                   onPressed: () {
-                    //TODO change password button action
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ChangePasswordPage()),

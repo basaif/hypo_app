@@ -3,6 +3,7 @@ import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/user-model.dart';
+import 'package:hypoapp/resources/validators.dart';
 
 class ChangePasswordPage extends StatelessWidget {
 
@@ -61,8 +62,11 @@ class ChangePasswordFormState extends State<ChangePasswordForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
-  //TODO get real user data
-  UserModel user = UserModel("John", "Joe", "john.doe@example.com", "jj79xyz");
+  UserModel user = UserModel.currentUser;
+
+  String password;
+  String newPassword;
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +93,9 @@ class ChangePasswordFormState extends State<ChangePasswordForm> {
                     if (value.isEmpty) {
                       return AppStrings.passwordEmpty;
                     }
+                    else if(value != user.password){
+                      return AppStrings.passwordError;
+                    }
                     return null;
                   },
                 ),
@@ -100,10 +107,13 @@ class ChangePasswordFormState extends State<ChangePasswordForm> {
                     labelText: AppStrings.newPassword,
                     labelStyle: AppTextStyles.hintText,
                   ),
-
+                  obscureText: true,
                   validator: (value) {
                     if (value.isEmpty) {
                       return AppStrings.newPasswordEmpty;
+                    }
+                    else{
+                      newPassword = value;
                     }
                     return null;
                   },
@@ -116,11 +126,16 @@ class ChangePasswordFormState extends State<ChangePasswordForm> {
                     labelText: AppStrings.confirmPassword,
                     labelStyle: AppTextStyles.hintText,
                   ),
-
+                  obscureText: true,
                   validator: (value) {
-                    //TODO write real email validation logic
                     if (value.isEmpty) {
                       return AppStrings.confirmedPasswordEmpty;
+                    }
+                    else if (!Validator.confirmPassword(newPassword, value)){
+                      return AppStrings.confirmPasswordError;
+                    }
+                    else{
+                      newPassword = value;
                     }
                     return null;
                   },
@@ -137,11 +152,9 @@ class ChangePasswordFormState extends State<ChangePasswordForm> {
                         onPressed: () {
                           // Validate returns true if the form is valid, otherwise false.
                           if (_formKey.currentState.validate()) {
-                            // If the form is valid, display a snackbar. In the real world,
-                            // you'd often call a server or save the information in a database.
-                            //TODO write save changes button logic
-                            Scaffold.of(context).showSnackBar(
-                                SnackBar(content: Text('Processing Data')));
+                            if(UserModel.changePassword(newPassword)){
+                              Navigator.of(context).pop();
+                            }
                           }
                         },
                         child: Text(
