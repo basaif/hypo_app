@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/resources/validators.dart';
+import 'package:hypoapp/ui/pages/register-device-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -128,7 +130,6 @@ class SignUpFormState extends State<SignUpForm> {
                 style: AppTextStyles.inputText,
 
                 validator: (value) {
-                  //TODO write real email validation logic
                   bool isEmailCorrect = Validator.validateEmail(value);
                   if (!isEmailCorrect) {
                     return AppStrings.emailError;
@@ -197,11 +198,12 @@ class SignUpFormState extends State<SignUpForm> {
                       onPressed: () {
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          //TODO write sign up button logic
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')));
+                          if (UserModel.signUp(firstName, lastName, email, password)){
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => RegisterDevicePage(email: email)),
+                            );
+                          }
                         }
                       },
                       child: Text(

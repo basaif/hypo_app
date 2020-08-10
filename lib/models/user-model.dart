@@ -14,8 +14,18 @@ class UserModel {
     return true;
   }
 
-  static recoverPassword(String email){
+  static void recoverPassword(String email){
     //TODO: implement recover password
+  }
+
+  static bool signUp(String firstName, String lastName, String email, String password){
+    //TODO: implement signUp
+    return true;
+  }
+
+  static bool registerDevice(String email, String deviceCode){
+    //TODO: implement registerDevice
+    return true;
   }
 
 }

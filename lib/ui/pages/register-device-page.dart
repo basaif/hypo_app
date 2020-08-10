@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/models/user-model.dart';
+import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
 class RegisterDevicePage extends StatelessWidget {
+  final String email;
+  RegisterDevicePage({Key key, @required this.email}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,16 +40,18 @@ class RegisterDevicePage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     LogoWidget(),
-                                    RegisterDeviceForm(),
+                                    RegisterDeviceForm(email),
                                   ])));
                     })))));
   }
 }
 
 class RegisterDeviceForm extends StatefulWidget {
+  final String email;
+  RegisterDeviceForm(this.email);
   @override
   RegisterDeviceFormState createState() {
-    return RegisterDeviceFormState();
+    return RegisterDeviceFormState(email);
   }
 }
 
@@ -58,6 +64,11 @@ class RegisterDeviceFormState extends State<RegisterDeviceForm> {
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+
+  String email;
+  String deviceCode;
+
+  RegisterDeviceFormState(this.email);
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +93,9 @@ class RegisterDeviceFormState extends State<RegisterDeviceForm> {
                   if (value.isEmpty) {
                     return AppStrings.deviceCodeEmpty;
                   }
+                  else{
+                    deviceCode = value;
+                  }
                   return null;
                 },
               ),
@@ -96,11 +110,12 @@ class RegisterDeviceFormState extends State<RegisterDeviceForm> {
                       onPressed: () {
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          //TODO write conifrm device code button logic
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')));
+                          if (UserModel.registerDevice(email, deviceCode)){
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => AppSkeleton()),
+                            );
+                          }
                         }
                       },
                       child: Text(
