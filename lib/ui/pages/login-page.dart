@@ -160,6 +160,11 @@ class LoginFormState extends State<LoginForm> {
                                 MaterialPageRoute(builder: (context) => AppSkeleton()),
                               );
                             }
+                            else{
+                              Scaffold.of(context).showSnackBar(
+                                  SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
+                              );
+                            }
                         }
                       },
                       child: Text(

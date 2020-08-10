@@ -204,6 +204,11 @@ class SignUpFormState extends State<SignUpForm> {
                               MaterialPageRoute(builder: (context) => RegisterDevicePage(email: email)),
                             );
                           }
+                          else{
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
+                            );
+                          }
                         }
                       },
                       child: Text(

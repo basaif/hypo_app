@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
-import 'package:hypoapp/app/images.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/plant-model.dart';
@@ -54,7 +53,7 @@ class ChoosePlantContent extends StatefulWidget {
 }
 
 class ChoosePlantContentState extends State<ChoosePlantContent> {
-  //TODO get the real plant list data
+
   List<PlantModel> plants = List<PlantModel>();
   List<ListItem<PlantModel>> list = List<ListItem<PlantModel>>();
 
@@ -66,16 +65,7 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
   }
 
   void initializePlants() {
-    plants.add(PlantModel(
-        1,
-        "Leafy Vegetables",
-        "Salads, artichoke, basil, lettuce and other herbs",
-        AppImages.vegeiesIcon));
-    plants.add(PlantModel(2, "Fruit", "Tomatoes, peppers and strawberries",
-        AppImages.fruitsIcon));
-    plants.add(PlantModel(
-        3, "Other", "Cucumber, sweet corn and endives ", AppImages.otherIcon));
-
+    plants = PlantModel.plantsList;
   }
 
   void createList() {

@@ -160,6 +160,11 @@ class EditAccountFormState extends State<EditAccountForm> {
                           if(UserModel.editUserInfo(firstName, lastName, email)){
                             Navigator.of(context).pop();
                           }
+                          else{
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
+                            );
+                          }
                         }
                       },
                       child: Text(

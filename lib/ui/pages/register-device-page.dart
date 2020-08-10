@@ -115,6 +115,12 @@ class RegisterDeviceFormState extends State<RegisterDeviceForm> {
                               context,
                               MaterialPageRoute(builder: (context) => AppSkeleton()),
                             );
+
+                          }
+                          else{
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
+                            );
                           }
                         }
                       },

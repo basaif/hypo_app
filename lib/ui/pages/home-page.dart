@@ -490,11 +490,19 @@ class FirstTimeHomeContentState extends State<FirstTimeHomeContent> {
                 child: RaisedButton(
                   padding: EdgeInsets.all(20.0),
                   onPressed: () {
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChoosePlantsPage()),
-                    );
+                    if (PlantModel.getAvailablePlants()){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChoosePlantsPage()));
+                    }
+                    else{
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
+                      );
+                    }
+
+
                   },
                   child: Text(
                     AppStrings.startGrowing,
