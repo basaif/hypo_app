@@ -14,4 +14,8 @@ class UserModel {
     return true;
   }
 
+  static recoverPassword(String email){
+    //TODO: implement recover password
+  }
+
 }

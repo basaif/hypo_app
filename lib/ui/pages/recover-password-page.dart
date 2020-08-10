@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/resources/validators.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
@@ -59,6 +60,7 @@ class RecoverPasswordFormState extends State<RecoverPasswordForm> {
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  String email;
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +82,12 @@ class RecoverPasswordFormState extends State<RecoverPasswordForm> {
                 style: AppTextStyles.inputText,
 
                 validator: (value) {
-                  //TODO write real email validation logic
                   bool isEmailCorrect = Validator.validateEmail(value);
                   if (!isEmailCorrect) {
                     return AppStrings.emailError;
+                  }
+                  else{
+                    email = value;
                   }
                   return null;
                 },
@@ -99,11 +103,8 @@ class RecoverPasswordFormState extends State<RecoverPasswordForm> {
                       onPressed: () {
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          //TODO write recover password button logic
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')));
+                          Navigator.of(context).pop();
+                          UserModel.recoverPassword(email);
                         }
                       },
                       child: Text(
