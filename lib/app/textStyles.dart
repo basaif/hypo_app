@@ -101,4 +101,37 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
     decoration: TextDecoration.none,
   );
+
+  static const TextStyle warningTitle = const TextStyle(
+    fontSize: 26,
+    color: ColorSets.darkGrey,
+    fontFamily: "Segoe UI",
+    fontWeight: FontWeight.normal,
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle warningBody = const TextStyle(
+    fontSize: 20,
+    color: ColorSets.grey,
+    fontFamily: "Segoe UI",
+    fontWeight: FontWeight.normal,
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle warningButton = const TextStyle(
+    fontSize: 20,
+    color: ColorSets.darkGrey,
+    fontFamily: "Segoe UI",
+    fontWeight: FontWeight.normal,
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle warningButtonRed = const TextStyle(
+    fontSize: 20,
+    color: Colors.red,
+    fontFamily: "Segoe UI",
+    fontWeight: FontWeight.normal,
+    decoration: TextDecoration.none,
+  );
+
 }

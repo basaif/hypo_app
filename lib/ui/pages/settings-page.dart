@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hypoapp/app.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
+import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/ui/pages/edit-account-page.dart';
+
+
+import 'package:hypoapp/global-data.dart' as appState;
 
 class SettingsPage extends StatelessWidget {
 
@@ -105,7 +110,6 @@ class SettingsContentState extends State<SettingsContent> {
                   color: ColorSets.primaryGreen,
                 ),
                 onTap: () {
-                  //TODO edit account list tile action
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => EditAccountPage()),
@@ -198,19 +202,21 @@ class SettingsContentState extends State<SettingsContent> {
               margin: EdgeInsets.only(bottom: 1, top: 0),
               child: ListTile(
                 leading: Icon(
-                  Icons.close,
+                  Icons.arrow_back,
                   color: ColorSets.primaryGreen,
                 ),
                 title: Text(
                   AppStrings.logout,
                   style: AppTextStyles.bodyHeadlines,
                 ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: ColorSets.primaryGreen,
-                ),
+
                 onTap: () {
-                  //TODO logout list tile action
+                  UserModel.logout();
+                  appState.isLoggedIn = false;
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HypoApp()),
+                  );
                 },
               )),
         ],

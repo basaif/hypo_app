@@ -8,6 +8,7 @@ class PlantModel{
   static List<PlantModel> plantsList;
 
   PlantModel(this.id, this.groupName, this.description, this.imageLocation);
+  PlantModel.init();
 
   static bool getAvailablePlants(){
     //TODO: implement getAvailablePlants

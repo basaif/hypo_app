@@ -10,6 +10,8 @@ class UserModel {
 
   UserModel(this.firstName, this.lastName, this.emailAddress, this.password);
 
+  UserModel.init();
+
   static bool login(String email, String password){
     //TODO: implement login
     currentUser = UserModel("Jimmy", "Kimmel", email, password);
@@ -44,6 +46,10 @@ class UserModel {
     //TODO: implement changePassword
     currentUser.password = newPassword;
     return true;
+  }
+
+  static logout(){
+    currentUser = UserModel.init();
   }
 
 

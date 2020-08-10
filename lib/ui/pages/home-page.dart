@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
-import 'package:hypoapp/app/images.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
-import 'package:hypoapp/fake-data.dart';
 import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/models/readings-model.dart';
 import 'package:hypoapp/models/tray-model.dart';
@@ -11,6 +9,8 @@ import 'package:hypoapp/ui/pages/choose-plants-page.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:hypoapp/global-data.dart' as appState;
+
+import 'app-skeleton-page.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -34,7 +34,6 @@ class HomePage extends StatelessWidget {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                //TODO add the real home widgets
                                 Content(),
                               ]))));
                 }))));
@@ -52,7 +51,9 @@ class ContentState extends State<Content> {
   @override
   void initState() {
     super.initState();
-    //TODO: implement the initial state of ContentState
+    if(appState.isGrowing){
+      TrayModel.getCurrentTray();
+    }
   }
 
   @override
@@ -69,38 +70,9 @@ class ActiveHomeContent extends StatefulWidget {
 }
 
 class ActiveHomeContentState extends State<ActiveHomeContent> {
-  //TODO get real tray data
 
-  static List<ReadingsModel> readings = List<ReadingsModel>();
+  TrayModel tray = TrayModel.currentTray;
 
-  final TrayModel tray = TrayModel(
-    id: 1,
-    startDate: DateTime(2020, 6, 1),
-    growingPlant: PlantModel(
-        1,
-        "Leafy Vegetables",
-        "Salads, artichoke, basil, lettuce and other herbs",
-        AppImages.vegeiesIcon),
-    growingData: FakeData.populateReadings(readings),
-  );
-
-//  Widget _getListItemTile(BuildContext context, int index) {
-//    return Container(
-//      margin: EdgeInsets.symmetric(vertical: 4),
-//      child: Card(
-//        child: Column(
-//                  crossAxisAlignment: CrossAxisAlignment.start,
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                  mainAxisSize: MainAxisSize.min,
-//                  children: <Widget>[
-//                    Text("Date: "+ tray.growingData[index].dateOfReading.toString(), style: AppTextStyles.bodyHeadlines),
-//                    Text("Time: "+ tray.growingData[index].timeOfReading.toString(), style: AppTextStyles.bodyHeadlines),
-//                    Text("Type: "+ tray.growingData[index].readingType.toString(), style: AppTextStyles.bodyHeadlines),
-//                    Text("Value: "+ tray.growingData[index].value.toString(), style: AppTextStyles.bodyHeadlines),
-//                  ],
-//                ))
-//            );
-//  }
   List<charts.Series<ReadingsModel, DateTime>> seriesList =
       List<charts.Series<ReadingsModel, DateTime>>();
 
@@ -148,7 +120,12 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
   void initState() {
     super.initState();
 
-    lastReading = tray.growingData[tray.growingData.length - 1].dateOfReading;
+    if (tray.growingData.length - 1 <= 0){
+      lastReading = DateTime.now();
+    }
+    else{
+      lastReading = tray.growingData[tray.growingData.length - 1].dateOfReading;
+    }
 
     isEcButtonActive = false;
     isPhButtonActive = true;
@@ -166,19 +143,47 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
 
   @override
   Widget build(BuildContext context) {
-//    return SingleChildScrollView(
-//      physics: ScrollPhysics(),
-//      child:
-//      Column(
-//          children: <Widget>[
-//      ListView.builder(
-//      physics: NeverScrollableScrollPhysics(),
-//      itemBuilder: _getListItemTile,
-//      itemCount: tray.growingData.length,
-//      shrinkWrap: true,
-//
-//    )],));
 
+    Future<void> _showAlertDialog() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(AppStrings.endCycle, style: AppTextStyles.warningTitle,),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(AppStrings.endCycleWarning, style: AppTextStyles.warningBody,),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(AppStrings.cancel, style: AppTextStyles.warningButton,),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(AppStrings.proceed, style: AppTextStyles.warningButtonRed,),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    appState.isGrowing = false;
+                    TrayModel.endCycle();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => AppSkeleton()),
+                    );
+                  });
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
     return Container(
         child: Padding(
             padding: EdgeInsets.all(2),
@@ -237,7 +242,9 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                                     Padding(
                                       padding: EdgeInsets.all(0),
                                       child: FlatButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _showAlertDialog();
+                                        },
                                         child: Text(
                                           AppStrings.endCycle,
                                           style: AppTextStyles.links,

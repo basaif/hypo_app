@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/plant-model.dart';
 
 import 'package:hypoapp/global-data.dart' as appState;
+import 'package:hypoapp/models/tray-model.dart';
 
 class ChoosePlantsPage extends StatelessWidget {
   @override
@@ -78,11 +80,15 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
   Widget _getListItemTile(BuildContext context, int index) {
     return GestureDetector(
       onTap: () {
+        SystemSound.play(SystemSoundType.click);
       setState(() {
-        if (list.any((item) => item.isSelected)) {
+        if(list[index].isSelected){
           list[index].isSelected = false;
         }
-        else {
+        else if(!list[index].isSelected){
+          for(int i = 0; i < list.length; i++){
+            list[i].isSelected = false;
+          }
           list[index].isSelected = true;
         }
       });
@@ -148,7 +154,13 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
           child: RaisedButton(
             padding: EdgeInsets.all(20.0),
             onPressed: list.any((item) => item.isSelected) ?  () {
-                //TODO write the real logic of the confirm button
+              PlantModel plant = PlantModel.init();
+              list.forEach((item) => {
+                if (item.isSelected){
+                  plant = item.data
+                }
+              });
+              TrayModel.startGrowing(DateTime.now(), plant);
               setState(() {
                 appState.isGrowing = true;
               });

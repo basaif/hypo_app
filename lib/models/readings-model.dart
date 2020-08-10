@@ -9,6 +9,10 @@ class ReadingsModel {
   ReadingsModel({this.id, this.dateOfReading,
       this.readingType, this.value});
 
+  static bool getReadings(){
+    //TODO: implement getReadings
+    return true;
+  }
 
 }
 

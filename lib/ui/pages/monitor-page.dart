@@ -24,7 +24,6 @@ class MonitorPage extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                //TODO add the real monitor widgets
                                 MonitorContent(),
                               ])));
                 }))));
