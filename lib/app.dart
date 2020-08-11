@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hypoapp/app/colors.dart';
+import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:flutter/services.dart';
 import 'package:hypoapp/ui/pages/login-page.dart';
@@ -18,6 +19,10 @@ class HypoApp extends StatelessWidget {
     ]);
 
     AppState.loadState();
+
+    if (AppState.isLoggedIn){
+      UserModel.loadCurrentUser();
+    }
 
     return MaterialApp(
       title: "Hypo App",

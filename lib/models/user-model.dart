@@ -52,6 +52,11 @@ class UserModel {
     currentUser = UserModel.init();
   }
 
+  static loadCurrentUser(){
+    //TODO: implement loadCurrentUser
+    currentUser = UserModel('Sophie', 'Scott', 'sophie@scott.com', '1234');
+  }
+
 
 
 }
