@@ -4,7 +4,7 @@ import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:flutter/services.dart';
 import 'package:hypoapp/ui/pages/login-page.dart';
 
-import 'global-data.dart' as appState;
+import 'app-state.dart';
 
 class HypoApp extends StatelessWidget {
 
@@ -17,13 +17,15 @@ class HypoApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
+    AppState.loadState();
+
     return MaterialApp(
       title: "Hypo App",
       theme: ThemeData(
         primarySwatch: ColorSets.primaryGreen,
       ),
       home: Scaffold(
-        body: appState.isLoggedIn ? AppSkeleton() : LoginPage(),
+        body: AppState.isLoggedIn ? AppSkeleton() : LoginPage(),
       ),
     );
   }

@@ -6,6 +6,8 @@ import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
 
+import '../../app-state.dart';
+
 class RegisterDevicePage extends StatelessWidget {
   final String email;
   RegisterDevicePage({Key key, @required this.email}) : super(key: key);
@@ -111,6 +113,7 @@ class RegisterDeviceFormState extends State<RegisterDeviceForm> {
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
                           if (UserModel.registerDevice(email, deviceCode)){
+                            AppState.setStateLogged(true);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => AppSkeleton()),

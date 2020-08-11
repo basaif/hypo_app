@@ -8,7 +8,7 @@ import 'package:hypoapp/models/tray-model.dart';
 import 'package:hypoapp/ui/pages/choose-plants-page.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'package:hypoapp/global-data.dart' as appState;
+import 'package:hypoapp/app-state.dart';
 
 import 'app-skeleton-page.dart';
 
@@ -51,14 +51,14 @@ class ContentState extends State<Content> {
   @override
   void initState() {
     super.initState();
-    if(appState.isGrowing){
+    if(AppState.isGrowing){
       TrayModel.getCurrentTray();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return appState.isGrowing ? ActiveHomeContent() : FirstTimeHomeContent();
+    return AppState.isGrowing ? ActiveHomeContent() : FirstTimeHomeContent();
   }
 }
 
@@ -170,7 +170,7 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   setState(() {
-                    appState.isGrowing = false;
+                    AppState.setStateGrowing(false);
                     TrayModel.endCycle();
                     Navigator.pushReplacement(
                       context,

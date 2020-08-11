@@ -6,7 +6,7 @@ import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
 import 'package:hypoapp/models/plant-model.dart';
 
-import 'package:hypoapp/global-data.dart' as appState;
+import 'package:hypoapp/app-state.dart';
 import 'package:hypoapp/models/tray-model.dart';
 
 class ChoosePlantsPage extends StatelessWidget {
@@ -162,7 +162,7 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
               });
               TrayModel.startGrowing(DateTime.now(), plant);
               setState(() {
-                appState.isGrowing = true;
+                AppState.setStateGrowing(true);
               });
 
               Navigator.of(context).pop();
