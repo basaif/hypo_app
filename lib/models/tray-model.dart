@@ -2,6 +2,7 @@ import 'package:hypoapp/app/images.dart';
 import 'package:hypoapp/fake-data.dart';
 import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/models/readings-model.dart';
+import 'package:hypoapp/resources/tray-storage.dart';
 
 class TrayModel{
   int id;
@@ -30,17 +31,13 @@ class TrayModel{
      currentTray.startDate = startDate;
      currentTray.growingPlant = plant;
      currentTray.growingData = List<ReadingsModel>();
+     TrayStorage.writeTray();
 
   }
 
   static getCurrentTray(){
     //TODO: implement getCurrentTray
-    currentTray.startDate = DateTime(2020, 7, 20);
-    currentTray.growingPlant = PlantModel(
-        1,
-        "Leafy Vegetables",
-        "Salads, artichoke, basil, lettuce and other herbs",
-        AppImages.vegeiesIcon);
+    TrayStorage.readTray();
     currentTray.growingData = List<ReadingsModel>();
         FakeData.populateReadings(currentTray.growingData);
   }

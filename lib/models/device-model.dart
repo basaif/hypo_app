@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:hypoapp/models/tray-model.dart';
+import 'package:hypoapp/resources/device-storage.dart';
 
 class DeviceModel {
   String deviceCode;
@@ -21,10 +22,17 @@ class DeviceModel {
 
   static getMeasurements(){
     //TODO: implement get measurements
-     currentDevice.currentWaterLevel = Random().nextInt(100);
-     currentDevice.currentNSLevel = Random().nextInt(100);
-     currentDevice.currentPhUpLevel = Random().nextInt(100);
-     currentDevice.currentPhDownLevel = Random().nextInt(100);
+    if(false){
+      currentDevice.currentWaterLevel = Random().nextInt(100);
+      currentDevice.currentNSLevel = Random().nextInt(100);
+      currentDevice.currentPhUpLevel = Random().nextInt(100);
+      currentDevice.currentPhDownLevel = Random().nextInt(100);
+      DeviceStorage.writeCurrentMeasurements();
+    }
+    else{
+      DeviceStorage.readCurrentMeasurements();
+    }
+
   }
 
   static bool changeLightsState(){

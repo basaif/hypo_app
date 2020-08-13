@@ -10,6 +10,7 @@ import 'app-state.dart';
 class HypoApp extends StatelessWidget {
 
 
+
   @override
   Widget build(BuildContext context) {
     //this forces the app to be in portrait mode
@@ -17,6 +18,7 @@ class HypoApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
 
     AppState.loadState();
 
