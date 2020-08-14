@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/images.dart';
 import 'package:hypoapp/app/strings.dart';
@@ -31,205 +32,272 @@ class MonitorPage extends StatelessWidget {
   }
 }
 
-class MonitorContent extends StatelessWidget {
+class MonitorContent extends StatefulWidget{
+  @override
+  MonitorContentState createState() {
+    return MonitorContentState();
+  }
+}
+
+class MonitorContentState extends State<MonitorContent> {
+  Widget _body = Center(child: CircularProgressIndicator(),);
+
+  String waterLevel;
+  String nutrientSolution;
+  String phUpBuffer;
+  String phDownBuffer;
+
+  void _loadHome() async{
+    await DeviceModel.getMeasurements();
+    if(DeviceModel.currentDevice.currentWaterLevel == null){
+      setState(() {
+        _body = Center(child: CircularProgressIndicator(),);
+      });
+    }
+    else{
+      setState(() {
+        waterLevel = DeviceModel.currentDevice.currentWaterLevel.toString();
+        nutrientSolution = DeviceModel.currentDevice.currentNSLevel.toString();
+        phUpBuffer = DeviceModel.currentDevice.currentPhUpLevel.toString();
+        phDownBuffer = DeviceModel.currentDevice.currentPhDownLevel.toString();
+        _body = _loadedBody();
+      });
+      }
+    }
+
+
+
+
+  void initState() {
+    super.initState();
+    _loadHome();
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    DeviceModel.getMeasurements();
+    return _body;
+  }
 
-    String waterLevel = DeviceModel.currentDevice.currentWaterLevel.toString();
-    String nutrientSolution = DeviceModel.currentDevice.currentNSLevel.toString();
-    String phUpBuffer = DeviceModel.currentDevice.currentPhUpLevel.toString();
-    String phDownBuffer = DeviceModel.currentDevice.currentPhDownLevel.toString();
-
+  Widget _loadedBody(){
     return Container(
       child: Padding(
         padding: EdgeInsets.all(5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Card(
-              margin: EdgeInsets.only(bottom: 30),
-              elevation: 5,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
+            GestureDetector(
+                onTap: () {
+                  SystemSound.play(SystemSoundType.click);
+                  setState(() {
 
-                  Padding(
-                      padding: EdgeInsets.only(left: 25),
-                      child:Image.asset(
-                    AppImages.waterLevelIcon,
-                    height: 100.0,
-                  )),
-                  Padding(
-                      padding: EdgeInsets.only(right: 50),
-                      child:Column(
+                    _loadHome();
+                  });
+                },
+                child:Card(
+                  margin: EdgeInsets.only(bottom: 30),
+                  elevation: 5,
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
+
                       Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            AppStrings.waterLevel,
-                            style: AppTextStyles.bodyHeadlines,
+                          padding: EdgeInsets.only(left: 25),
+                          child:Image.asset(
+                            AppImages.waterLevelIcon,
+                            height: 100.0,
                           )),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            waterLevel,
-                            style: AppTextStyles.measurementText,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 4, right: 4),
-                          ),
-                          Text(
-                            AppStrings.centimeters,
-                            style: AppTextStyles.measurementText,
-                          )
-                        ],
-                      )
-                    ],
-                  )),
-
-                ],
-              ),
-            ),
-            Card(
-              margin: EdgeInsets.only(bottom: 30),
-              elevation: 5,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-
-                  Padding(
-                      padding: EdgeInsets.only(left: 25),
-                      child:Image.asset(
-                    AppImages.nsLevelIcon,
-                    height: 100.0,
-                  )),
-                  Padding(
-                      padding: EdgeInsets.only(right: 30),
-                      child:Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            AppStrings.nutrientSolution,
-                            style: AppTextStyles.bodyHeadlines,
-                          )),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            nutrientSolution,
-                            style: AppTextStyles.measurementText,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 4, right: 4),
-                          ),
-                          Text(
-                            AppStrings.milliliters,
-                            style: AppTextStyles.measurementText,
-                          )
-                        ],
-                      )
-                    ],
-                  )),
-
-                ],
-              ),
-            ),
-            Card(
-              margin: EdgeInsets.only(bottom: 30),
-              elevation: 5,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-              Padding(
-              padding: EdgeInsets.only(left: 25),
-              child:
-                  Image.asset(
-                    AppImages.phUpIcon,
-                    height: 100.0,
-                  )),
-                  Padding(
-                      padding: EdgeInsets.only(right: 40),
-                      child:Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            AppStrings.phUpBuffer,
-                            style: AppTextStyles.bodyHeadlines,
-                          )),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            phUpBuffer,
-                            style: AppTextStyles.measurementText,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 4, right: 4),
-                          ),
-                          Text(
-                            AppStrings.milliliters,
-                            style: AppTextStyles.measurementText,
-                          )
-                        ],
-                      )
-                    ],
-                  )),
-
-                ],
-              ),
-            ),
-            Card(
-              margin: EdgeInsets.only(bottom: 30),
-              elevation: 5,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Image.asset(
-                        AppImages.phDownIcon,
-                        height: 100.0,
-                      )),
-                  Padding(
-                      padding: EdgeInsets.only(right: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                AppStrings.phDownBuffer,
-                                style: AppTextStyles.bodyHeadlines,
-                              )),
-                          Row(
+                          padding: EdgeInsets.only(right: 50),
+                          child:Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Text(
-                                phDownBuffer,
-                                style: AppTextStyles.measurementText,
-                              ),
                               Padding(
-                                padding: EdgeInsets.only(left: 4, right: 4),
-                              ),
-                              Text(
-                                AppStrings.milliliters,
-                                style: AppTextStyles.measurementText,
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text(
+                                    AppStrings.waterLevel,
+                                    style: AppTextStyles.bodyHeadlines,
+                                  )),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    waterLevel,
+                                    style: AppTextStyles.measurementText,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 4, right: 4),
+                                  ),
+                                  Text(
+                                    AppStrings.centimeters,
+                                    style: AppTextStyles.measurementText,
+                                  )
+                                ],
                               )
                             ],
-                          )
-                        ],
-                      )),
-                ],
-              ),
-            ),
+                          )),
+
+                    ],
+                  ),
+
+                )),
+            GestureDetector(
+                onTap: () {
+                  SystemSound.play(SystemSoundType.click);
+                  setState(() {
+                    _loadHome();
+                  });
+                },
+                child:Card(
+                  margin: EdgeInsets.only(bottom: 30),
+                  elevation: 5,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+
+                      Padding(
+                          padding: EdgeInsets.only(left: 25),
+                          child:Image.asset(
+                            AppImages.nsLevelIcon,
+                            height: 100.0,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.only(right: 30),
+                          child:Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text(
+                                    AppStrings.nutrientSolution,
+                                    style: AppTextStyles.bodyHeadlines,
+                                  )),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    nutrientSolution,
+                                    style: AppTextStyles.measurementText,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 4, right: 4),
+                                  ),
+                                  Text(
+                                    AppStrings.milliliters,
+                                    style: AppTextStyles.measurementText,
+                                  )
+                                ],
+                              )
+                            ],
+                          )),
+
+                    ],
+                  ),
+                )),
+            GestureDetector(
+                onTap: () {
+                  SystemSound.play(SystemSoundType.click);
+                  setState(() {
+                    _loadHome();
+                  });
+                },
+                child:Card(
+                  margin: EdgeInsets.only(bottom: 30),
+                  elevation: 5,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(left: 25),
+                          child:
+                          Image.asset(
+                            AppImages.phUpIcon,
+                            height: 100.0,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.only(right: 40),
+                          child:Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text(
+                                    AppStrings.phUpBuffer,
+                                    style: AppTextStyles.bodyHeadlines,
+                                  )),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    phUpBuffer,
+                                    style: AppTextStyles.measurementText,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 4, right: 4),
+                                  ),
+                                  Text(
+                                    AppStrings.milliliters,
+                                    style: AppTextStyles.measurementText,
+                                  )
+                                ],
+                              )
+                            ],
+                          )),
+
+                    ],
+                  ),
+                )),
+            GestureDetector(
+                onTap: () {
+                  SystemSound.play(SystemSoundType.click);
+                  setState(() {
+                    _loadHome();
+                  });
+                },
+                child:Card(
+                  margin: EdgeInsets.only(bottom: 30),
+                  elevation: 5,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(left: 25),
+                          child: Image.asset(
+                            AppImages.phDownIcon,
+                            height: 100.0,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.only(right: 30),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text(
+                                    AppStrings.phDownBuffer,
+                                    style: AppTextStyles.bodyHeadlines,
+                                  )),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    phDownBuffer,
+                                    style: AppTextStyles.measurementText,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 4, right: 4),
+                                  ),
+                                  Text(
+                                    AppStrings.milliliters,
+                                    style: AppTextStyles.measurementText,
+                                  )
+                                ],
+                              )
+                            ],
+                          )),
+                    ],
+                  ),
+                )),
           ],
         ),
       ),

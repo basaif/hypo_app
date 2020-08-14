@@ -1,4 +1,4 @@
-import 'package:hypoapp/app/images.dart';
+
 import 'package:hypoapp/fake-data.dart';
 import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/models/readings-model.dart';
@@ -18,11 +18,8 @@ class TrayModel{
 
    List<ReadingsModel> getTypeBasedData(ReadingType readingType){
     List<ReadingsModel> typeData = List<ReadingsModel>();
-    growingData.forEach((reading) => {
-      if (reading.readingType == readingType){
-        typeData.add(reading)
-      }
-    });
+    growingData.forEach((reading) => reading.readingType == readingType ?
+        typeData.add(reading) : null);
     return typeData;
   }
 
@@ -35,9 +32,9 @@ class TrayModel{
 
   }
 
-  static getCurrentTray(){
+  static Future<void> getCurrentTray() async{
     //TODO: implement getCurrentTray
-    TrayStorage.readTray();
+    await TrayStorage.readTray();
     currentTray.growingData = List<ReadingsModel>();
         FakeData.populateReadings(currentTray.growingData);
   }

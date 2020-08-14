@@ -9,6 +9,8 @@ import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/app-state.dart';
 import 'package:hypoapp/models/tray-model.dart';
 
+import 'app-skeleton-page.dart';
+
 class ChoosePlantsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -130,6 +132,8 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return
@@ -155,17 +159,17 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
             padding: EdgeInsets.all(20.0),
             onPressed: list.any((item) => item.isSelected) ?  () {
               PlantModel plant = PlantModel.init();
-              list.forEach((item) => {
-                if (item.isSelected){
-                  plant = item.data
-                }
-              });
+              list.forEach((item) => item.isSelected ? plant = item.data : null);
               TrayModel.startGrowing(DateTime.now(), plant);
+
               setState(() {
                 AppState.setStateGrowing(true);
               });
-
-              Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => AppSkeleton()),
+              );
+              //Navigator.of(context).pop();
             } : null,
             child: Text(
               AppStrings.confirm,

@@ -48,17 +48,46 @@ class Content extends StatefulWidget {
 }
 
 class ContentState extends State<Content> {
+  Widget _body = Center(child: CircularProgressIndicator(),);
+  void _loadHome() async{
+    await AppState.loadState();
+    if(AppState.isGrowing == null){
+      setState(() {
+        _body = Center(child: CircularProgressIndicator(),);
+      });
+    }
+    else{
+      if (AppState.isGrowing){
+        await TrayModel.getCurrentTray();
+        if(TrayModel.currentTray.startDate == null){
+          setState(() {
+            _body = Center(child: CircularProgressIndicator(),);
+          });
+        }
+        else{
+          setState(() {
+            _body = ActiveHomeContent();
+          });
+        }
+
+      }
+      else{
+        setState(() {
+          _body = FirstTimeHomeContent();
+        });
+      }
+    }
+  }
   @override
   void initState() {
     super.initState();
-    if(AppState.isGrowing){
-      TrayModel.getCurrentTray();
-    }
+    _loadHome();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return AppState.isGrowing ? ActiveHomeContent() : FirstTimeHomeContent();
+    return _body;
   }
 }
 
@@ -119,6 +148,8 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
 
   void initState() {
     super.initState();
+
+    tray = TrayModel.currentTray;
 
     if (tray.growingData.length - 1 <= 0){
       lastReading = DateTime.now();

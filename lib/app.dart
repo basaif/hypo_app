@@ -7,9 +7,45 @@ import 'package:hypoapp/ui/pages/login-page.dart';
 
 import 'app-state.dart';
 
-class HypoApp extends StatelessWidget {
+class HypoApp extends StatefulWidget{
+  @override
+  HypoAppState createState() {
+    return HypoAppState();
+  }
 
+}
 
+class HypoAppState extends State<StatefulWidget> {
+
+  Widget _body = Center(child: CircularProgressIndicator(),);
+  void _loadHome() async{
+    await AppState.loadState();
+    if(AppState.isLoggedIn == null){
+      setState(() {
+        _body = Center(child: CircularProgressIndicator(),);
+      });
+    }
+    else{
+      if (AppState.isLoggedIn){
+        UserModel.loadCurrentUser();
+        setState(() {
+          _body = AppSkeleton();
+        });
+
+      }
+      else{
+        setState(() {
+          _body = LoginPage();
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHome();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +55,13 @@ class HypoApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-
-    AppState.loadState();
-
-    if (AppState.isLoggedIn){
-      UserModel.loadCurrentUser();
-    }
-
     return MaterialApp(
       title: "Hypo App",
       theme: ThemeData(
         primarySwatch: ColorSets.primaryGreen,
       ),
       home: Scaffold(
-        body: AppState.isLoggedIn ? AppSkeleton() : LoginPage(),
-      ),
-    );
+        body:_body
+    ));
   }
 }

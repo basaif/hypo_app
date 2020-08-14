@@ -18,7 +18,7 @@ class TrayStorage {
     return File('$path/tray.txt');
   }
 
-  static void readTray() async {
+  static Future<void> readTray() async {
     TrayModel.currentTray.growingPlant = PlantModel.init();
     try {
       final file = await _localFile;

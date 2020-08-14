@@ -20,9 +20,9 @@ class DeviceModel {
 
   DeviceModel({this.deviceCode});
 
-  static getMeasurements(){
+  static Future<void> getMeasurements() async{
     //TODO: implement get measurements
-    if(false){
+    if(true){
       currentDevice.currentWaterLevel = Random().nextInt(100);
       currentDevice.currentNSLevel = Random().nextInt(100);
       currentDevice.currentPhUpLevel = Random().nextInt(100);
@@ -30,7 +30,7 @@ class DeviceModel {
       DeviceStorage.writeCurrentMeasurements();
     }
     else{
-      DeviceStorage.readCurrentMeasurements();
+      await DeviceStorage.readCurrentMeasurements();
     }
 
   }

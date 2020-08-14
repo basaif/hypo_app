@@ -16,7 +16,7 @@ class DeviceStorage {
     return File('$path/device-current-measurements.txt');
   }
 
-  static void readCurrentMeasurements() async {
+  static Future<void> readCurrentMeasurements() async {
     try {
       final file = await _localFile;
 
