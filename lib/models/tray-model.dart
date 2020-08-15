@@ -23,26 +23,32 @@ class TrayModel{
     return typeData;
   }
 
-  static startGrowing(DateTime startDate, PlantModel plant){
+  static startGrowing(DateTime startDate, PlantModel plant) async{
      //TODO: implement startGrowing
      currentTray.startDate = startDate;
      currentTray.growingPlant = plant;
      currentTray.growingData = List<ReadingsModel>();
-     TrayStorage.writeTray();
+     await TrayStorage.writeTray();
+     await TrayStorage.writeTrayData();
 
   }
 
   static Future<void> getCurrentTray() async{
     //TODO: implement getCurrentTray
     await TrayStorage.readTray();
-    currentTray.growingData = List<ReadingsModel>();
+    await TrayStorage.readTrayData();
+    if(currentTray.growingData.length > 0){
+      await TrayStorage.writeTrayData();
+    }
+//    currentTray.growingData = List<ReadingsModel>();
         FakeData.populateReadings(currentTray.growingData);
   }
 
-  static endCycle(){
+  static endCycle() async{
     //TODO: implement endCycle
     currentTray.endDate = DateTime.now();
     currentTray = TrayModel();
+    await TrayStorage.deleteTrayData();
 
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hypoapp/app.dart';
 import 'package:hypoapp/app/colors.dart';
 import 'package:hypoapp/app/strings.dart';
 import 'package:hypoapp/app/textStyles.dart';
@@ -9,7 +10,7 @@ import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/app-state.dart';
 import 'package:hypoapp/models/tray-model.dart';
 
-import 'app-skeleton-page.dart';
+
 
 class ChoosePlantsPage extends StatelessWidget {
   @override
@@ -167,7 +168,7 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
               });
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => AppSkeleton()),
+                MaterialPageRoute(builder: (context) => HypoApp()),
               );
               //Navigator.of(context).pop();
             } : null,
