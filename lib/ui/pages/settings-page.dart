@@ -8,8 +8,6 @@ import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/ui/pages/edit-account-page.dart';
 
 
-import 'package:hypoapp/app-state.dart';
-
 class SettingsPage extends StatelessWidget {
 
 
@@ -212,7 +210,7 @@ class SettingsContentState extends State<SettingsContent> {
 
                 onTap: () {
                   UserModel.logout();
-                  AppState.setStateLogged(false);
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => HypoApp()),

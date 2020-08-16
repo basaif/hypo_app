@@ -1,5 +1,9 @@
 import 'package:hypoapp/models/device-model.dart';
+import 'package:hypoapp/models/tray-model.dart';
+import 'package:hypoapp/resources/tray-storage.dart';
 import 'package:hypoapp/resources/user-storage.dart';
+
+import '../app-state.dart';
 
 class UserModel {
   int id = 1;
@@ -58,6 +62,10 @@ class UserModel {
 
   static logout(){
     currentUser = UserModel.init();
+    AppState.setStateLogged(false);
+    AppState.setStateGrowing(false);
+    TrayStorage.deleteTrayData();
+    TrayModel.currentTray = TrayModel();
     UserStorage.deleteUser();
   }
 
