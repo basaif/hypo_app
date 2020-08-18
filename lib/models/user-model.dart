@@ -20,6 +20,15 @@ class UserModel {
 
   UserModel.init();
 
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      json['firstName'] as String,
+      json['lastName'] as String,
+      json['emailAddress'] as String,
+      json['password'] as String,
+    );
+  }
+
   static bool login(String email, String password){
     //TODO: implement login
     currentUser = UserModel("Jimmy", "Kimmel", email, password);
@@ -70,7 +79,6 @@ class UserModel {
   }
 
   static loadCurrentUser() {
-    //TODO: implement loadCurrentUser
    //currentUser = UserModel("Sophie", "Scott", "sophie@scott.com", "23122");
     UserStorage.readUser();
   }

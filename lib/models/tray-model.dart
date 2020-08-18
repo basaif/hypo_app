@@ -16,6 +16,13 @@ class TrayModel{
   TrayModel({this.id, this.growingPlant, this.startDate,
     this.growingData});
 
+  factory TrayModel.fromJson(Map<String, dynamic> json) {
+    return TrayModel(
+      startDate: json['startDate'] as DateTime,
+      growingPlant: json['growingPlant'] as PlantModel,
+    );
+  }
+
    List<ReadingsModel> getTypeBasedData(ReadingType readingType){
     List<ReadingsModel> typeData = List<ReadingsModel>();
     growingData.forEach((reading) => reading.readingType == readingType ?

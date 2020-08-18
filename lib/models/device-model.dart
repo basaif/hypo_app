@@ -19,6 +19,17 @@ class DeviceModel {
   static DeviceModel currentDevice = DeviceModel();
 
   DeviceModel({this.deviceCode});
+  DeviceModel.fromMap({this.deviceCode, this.maxWaterLevel, this.maxNSLevel, this.maxPhUplevel, this.maxPhDownLevel});
+
+  factory DeviceModel.fromJson(Map<String, dynamic> json) {
+    return DeviceModel.fromMap(
+      deviceCode: json['deviceCode'] as String,
+      maxWaterLevel: json['maxWaterLevel'] as int,
+      maxNSLevel: json['maxNSLevel'] as int,
+      maxPhUplevel: json['maxPhUplevel'] as int,
+      maxPhDownLevel: json['maxPhDownLevel'] as int,
+    );
+  }
 
   static Future<void> getMeasurements() async{
     //TODO: implement get measurements
