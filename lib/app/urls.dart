@@ -2,7 +2,7 @@ class AppUrls{
 
   static final String baseUrl = "http://192.168.1.109:8000/";
 
-static String loginUrl = baseUrl + "";
+static String loginUrl = baseUrl + "login.json";
 static String signUpUrl = baseUrl + "";
 static String registerDeviceUrl = baseUrl + "";
 

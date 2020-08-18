@@ -8,7 +8,7 @@ import 'package:hypoapp/ui/pages/app-skeleton-page.dart';
 import 'package:hypoapp/ui/pages/recover-password-page.dart';
 import 'package:hypoapp/ui/pages/sign-up-page.dart';
 import 'package:hypoapp/ui/widgets/app-widgets.dart';
-
+import 'dart:async';
 import '../../app-state.dart';
 
 class LoginPage extends StatelessWidget {
@@ -95,6 +95,7 @@ class LoginFormState extends State<LoginForm> {
   String email;
   String password;
 
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -153,10 +154,11 @@ class LoginFormState extends State<LoginForm> {
                     height: 70.0,
                     child: RaisedButton(
                       padding: EdgeInsets.all(20.0),
-                      onPressed: () {
+                      onPressed: () async{
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                            if (UserModel.login(email, password)){
+                          bool couldLogin = await UserModel.login(email, password);
+                            if (couldLogin){
                               AppState.setStateLogged(true);
                               Navigator.pushReplacement(
                                 context,

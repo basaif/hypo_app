@@ -1,5 +1,6 @@
 import 'package:hypoapp/models/device-model.dart';
 import 'package:hypoapp/models/tray-model.dart';
+import 'package:hypoapp/resources/data-handling.dart';
 import 'package:hypoapp/resources/tray-storage.dart';
 import 'package:hypoapp/resources/user-storage.dart';
 
@@ -21,19 +22,28 @@ class UserModel {
   UserModel.init();
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      json['firstName'] as String,
-      json['lastName'] as String,
-      json['emailAddress'] as String,
-      json['password'] as String,
+    return UserModel.fromMap(
+      firstName: json['user']['firstName'] as String,
+      lastName: json['user']['lastName'] as String,
     );
   }
 
-  static bool login(String email, String password){
-    //TODO: implement login
+  static Future<bool> login(String email, String password)async{
     currentUser = UserModel("Jimmy", "Kimmel", email, password);
     UserStorage.writeUser();
     return true;
+
+//    bool result = await DataHandler.loginHandler(email, password);
+//    if (result){
+//      currentUser.emailAddress = email;
+//      currentUser.password = password;
+//      UserStorage.writeUser();
+//      return result;
+//    }
+//    else{
+//      return result;
+//    }
+
   }
 
   static void recoverPassword(String email){
