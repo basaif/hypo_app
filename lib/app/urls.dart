@@ -1,20 +1,22 @@
 class AppUrls{
 
-static String loginUrl = "";
-static String signUpUrl = "";
-static String registerDeviceUrl = "";
+  static final String baseUrl = "http://192.168.1.109:8000/";
 
-static String getPlantsUrl = "";
-static String updateDeviceMeasurementsUrl = "";
-static String startGrowingUrl = "";
-static String endGrowingUrl = "";
-static String getTrayReadingsUrl = "";
+static String loginUrl = baseUrl + "";
+static String signUpUrl = baseUrl + "";
+static String registerDeviceUrl = baseUrl + "";
 
-static String changeLightsUrl = "";
-static String changeWaterPumpUrl = "";
+static String getPlantsUrl = baseUrl + "plants.json";
+static String updateDeviceMeasurementsUrl = baseUrl + "";
+static String startGrowingUrl = baseUrl + "";
+static String endGrowingUrl = baseUrl + "";
+static String getTrayReadingsUrl = baseUrl + "";
 
-static String updateUserInfoUrl = "";
-static String changePasswordUrl = "";
+static String changeLightsUrl = baseUrl + "";
+static String changeWaterPumpUrl = baseUrl + "";
+
+static String updateUserInfoUrl = baseUrl + "";
+static String changePasswordUrl = baseUrl + "";
 
 
 }

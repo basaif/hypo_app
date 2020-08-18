@@ -1,63 +1,64 @@
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:hypoapp/app/urls.dart';
 import 'package:hypoapp/models/tray-model.dart';
+import 'dart:convert';
 
 class ApiServices{
 
-  static Future<Response> userLogin(String email, String password) async {
-    return Dio().post(AppUrls.loginUrl, data: {"email": email, "password": password});
+  static Future<http.Response> userLogin(String email, String password) async {
+    return http.post(AppUrls.loginUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
   }
 
-  static Future<Response> userSignUp(String firstName, String lastName, String email, String password) async {
-    return Dio().post(AppUrls.signUpUrl, data: {"firstName": firstName, "lastName": lastName, "email": email, "password": password});
+  static Future<http.Response> userSignUp(String firstName, String lastName, String email, String password) async {
+    return http.post(AppUrls.signUpUrl, body: jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email, "password": password}));
   }
 
-  static Future<Response> registerDevice(String email, String deviceCode) async {
-    return Dio().post(AppUrls.registerDeviceUrl, data: {"email": email, "deviceCode": deviceCode});
+  static Future<http.Response> registerDevice(String email, String deviceCode) async {
+    return http.post(AppUrls.registerDeviceUrl, body: jsonEncode(<String, String>{"email": email, "deviceCode": deviceCode}));
   }
 
-  static Future<Response<List>> getPlants() async {
-    return Dio().get(AppUrls.getPlantsUrl);
+  static Future<http.Response> getPlants(http.Client client) async {
+    return client.get(AppUrls.getPlantsUrl);
   }
 
-  static Future<Response> updateDeviceMeasurements(String deviceCode) async {
-    return Dio().post(AppUrls.updateDeviceMeasurementsUrl, data: {"deviceCode": deviceCode});
+  static Future<http.Response> updateDeviceMeasurements(String deviceCode) async {
+    return http.post(AppUrls.updateDeviceMeasurementsUrl, body: jsonEncode(<String, String>{"deviceCode": deviceCode}));
   }
 
-  static Future<Response> startGrowing(String deviceCode, TrayModel tray) async {
-    return Dio().post(AppUrls.startGrowingUrl,
-        data: {
+  static Future<http.Response> startGrowing(String deviceCode, TrayModel tray) async {
+    return http.post(AppUrls.startGrowingUrl,
+        body: jsonEncode(<String, dynamic>{
       "deviceCode": deviceCode,
-      "startDate": tray.startDate.toIso8601String(),
+      "startDate": tray.startDate,
       "growingPlant" : {
         "groupName": tray.growingPlant.groupName,
         "description": tray.growingPlant.description,
         "image": tray.growingPlant.imageLocation
-      }});
+      }}));
   }
 
-  static Future<Response> endGrowing(String deviceCode, DateTime endDate) async {
-    return Dio().post(AppUrls.endGrowingUrl, data: {"deviceCode": deviceCode, "endDate": endDate.toIso8601String()});
+  static Future<http.Response> endGrowing(String deviceCode, DateTime endDate) async {
+    return http.post(AppUrls.endGrowingUrl, body: jsonEncode(<String, dynamic>{"deviceCode": deviceCode, "endDate": endDate}));
   }
 
-  static Future<Response<List>> getTrayReadings(String deviceCode) async {
-    return Dio().post(AppUrls.getTrayReadingsUrl, data: {"deviceCode": deviceCode});
+  static Future<http.Response> getTrayReadings(String deviceCode) async {
+    return http.post(AppUrls.getTrayReadingsUrl, body: jsonEncode(<String, String>{"deviceCode": deviceCode}));
   }
 
-  static Future<Response> changeLightsState(String deviceCode) async {
-    return Dio().post(AppUrls.changeLightsUrl, data: {"deviceCode": deviceCode});
+  static Future<http.Response> changeLightsState(String deviceCode) async {
+    return http.post(AppUrls.changeLightsUrl, body: jsonEncode(<String, String>{"deviceCode": deviceCode}));
   }
 
-  static Future<Response> changeWaterPumpState(String deviceCode) async {
-    return Dio().post(AppUrls.changeWaterPumpUrl, data: {"deviceCode": deviceCode});
+  static Future<http.Response> changeWaterPumpState(String deviceCode) async {
+    return http.post(AppUrls.changeWaterPumpUrl, body: jsonEncode(<String, String>{"deviceCode": deviceCode}));
   }
 
-  static Future<Response> updateUserInfo(String firstName, String lastName, String email) async {
-    return Dio().post(AppUrls.updateUserInfoUrl, data: {"firstName": firstName, "lastName": lastName, "email": email});
+  static Future<http.Response> updateUserInfo(String firstName, String lastName, String email) async {
+    return http.post(AppUrls.updateUserInfoUrl, body: jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email}));
   }
 
-  static Future<Response> changePassword(String email, String password) async {
-    return Dio().post(AppUrls.changePasswordUrl, data: {"email": email, "password": password});
+  static Future<http.Response> changePassword(String email, String password) async {
+    return http.post(AppUrls.changePasswordUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
   }
 
 

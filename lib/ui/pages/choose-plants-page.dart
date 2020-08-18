@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,8 +107,10 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Image.asset(
-                list[index].data.imageLocation,
+              CachedNetworkImage(
+                imageUrl: list[index].data.imageLocation,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
                 height: 100.0,
               ),
             Flexible(

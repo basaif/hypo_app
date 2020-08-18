@@ -12,6 +12,8 @@ import 'package:hypoapp/app-state.dart';
 
 import 'app-skeleton-page.dart';
 
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class HomePage extends StatelessWidget {
   @override
@@ -231,8 +233,10 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
                       children: <Widget>[
                         Padding(
                             padding: EdgeInsets.only(left: 10),
-                            child: Image.asset(
-                              tray.growingPlant.imageLocation,
+                            child: CachedNetworkImage(
+                              imageUrl: tray.growingPlant.imageLocation,
+                              placeholder: (context, url) => CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => Icon(Icons.error),
                               height: 100.0,
                             )),
                         Flexible(
@@ -509,8 +513,28 @@ class FirstTimeHomeContent extends StatefulWidget {
 }
 
 class FirstTimeHomeContentState extends State<FirstTimeHomeContent> {
+
+  Widget _body = Center(child: CircularProgressIndicator(),);
+  void _loadHome ()async{
+    await PlantModel.getAvailablePlants();
+    if(PlantModel.canGetPlants == null){
+      setState(() {
+        _body = Center(child: CircularProgressIndicator(),);
+      });
+    }
+    else{
+      setState(() {
+        _body = firstTimeBody();
+      });
+    }
+  }
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _loadHome();
+
+  }
+  Widget firstTimeBody(){
     return Container(
       child: Center(
         child: Column(
@@ -528,15 +552,21 @@ class FirstTimeHomeContentState extends State<FirstTimeHomeContent> {
                 child: RaisedButton(
                   padding: EdgeInsets.all(20.0),
                   onPressed: () {
-                    if (PlantModel.getAvailablePlants()){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChoosePlantsPage()));
+
+                    if(PlantModel.canGetPlants != null){
+                      if (PlantModel.canGetPlants){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChoosePlantsPage()));
+                      }
+
+
                     }
-                    else{
+                    else {
                       Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
+                          SnackBar(content: Text(AppStrings.generalError),
+                            duration: Duration(seconds: 3),)
                       );
                     }
 
@@ -557,5 +587,9 @@ class FirstTimeHomeContentState extends State<FirstTimeHomeContent> {
         ),
       ),
     );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return _body;
   }
 }
