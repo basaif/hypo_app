@@ -1,6 +1,7 @@
 import 'package:hypoapp/models/device-model.dart';
 import 'package:hypoapp/models/tray-model.dart';
 import 'package:hypoapp/resources/data-handling.dart';
+import 'package:hypoapp/resources/device-storage.dart';
 import 'package:hypoapp/resources/tray-storage.dart';
 import 'package:hypoapp/resources/user-storage.dart';
 
@@ -12,7 +13,6 @@ class UserModel {
   String lastName;
   String emailAddress;
   String password;
-  DeviceModel device;
   static UserModel currentUser = UserModel.init();
 
   UserModel(this.firstName, this.lastName, this.emailAddress, this.password);
@@ -23,26 +23,28 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel.fromMap(
-      firstName: json['user']['firstName'] as String,
-      lastName: json['user']['lastName'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
     );
   }
 
   static Future<bool> login(String email, String password)async{
-    currentUser = UserModel("Jimmy", "Kimmel", email, password);
-    UserStorage.writeUser();
-    return true;
+//    currentUser = UserModel("Jimmy", "Kimmel", email, password);
+//    UserStorage.writeUser();
+//    return true;
 
-//    bool result = await DataHandler.loginHandler(email, password);
-//    if (result){
-//      currentUser.emailAddress = email;
-//      currentUser.password = password;
-//      UserStorage.writeUser();
-//      return result;
-//    }
-//    else{
-//      return result;
-//    }
+    bool result = await DataHandler.loginHandler(email, password);
+    if (result){
+      currentUser.emailAddress = email;
+      currentUser.password = password;
+      UserStorage.writeUser();
+      DeviceStorage.writeCurrentMeasurements();
+      DeviceStorage.writeDevice();
+      return result;
+    }
+    else{
+      return result;
+    }
 
   }
 
@@ -86,11 +88,14 @@ class UserModel {
     TrayStorage.deleteTrayData();
     TrayModel.currentTray = TrayModel();
     UserStorage.deleteUser();
+    DeviceStorage.deleteDevice();
+    DeviceModel.currentDevice = DeviceModel();
   }
 
   static loadCurrentUser() {
    //currentUser = UserModel("Sophie", "Scott", "sophie@scott.com", "23122");
     UserStorage.readUser();
+    DeviceModel.loadCurrentDevice();
   }
 
 }

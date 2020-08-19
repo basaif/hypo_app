@@ -1,5 +1,5 @@
 
-import 'package:hypoapp/fake-data.dart';
+//import 'package:hypoapp/fake-data.dart';
 import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/models/readings-model.dart';
 import 'package:hypoapp/resources/tray-storage.dart';
@@ -18,8 +18,8 @@ class TrayModel{
 
   factory TrayModel.fromJson(Map<String, dynamic> json) {
     return TrayModel(
-      startDate: json['startDate'] as DateTime,
-      growingPlant: json['growingPlant'] as PlantModel,
+      startDate: DateTime.parse(json['startDate']),
+      growingPlant: PlantModel.fromJson(json['growingPlant']),
     );
   }
 
@@ -42,13 +42,15 @@ class TrayModel{
 
   static Future<void> getCurrentTray() async{
     //TODO: implement getCurrentTray
-    await TrayStorage.readTray();
-    await TrayStorage.readTrayData();
-    if(currentTray.growingData.length > 0){
-      await TrayStorage.writeTrayData();
-    }
-//    currentTray.growingData = List<ReadingsModel>();
-        FakeData.populateReadings(currentTray.growingData);
+//    await TrayStorage.readTray();
+//    await TrayStorage.readTrayData();
+//    if(currentTray.growingData.length > 0){
+//      await TrayStorage.writeTrayData();
+//    }
+////    currentTray.growingData = List<ReadingsModel>();
+//        FakeData.populateReadings(currentTray.growingData);
+    currentTray.growingData = List<ReadingsModel>();
+
   }
 
   static endCycle() async{

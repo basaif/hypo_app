@@ -6,8 +6,8 @@ import 'dart:convert';
 class ApiServices{
 
   static Future<http.Response> userLogin(http.Client client, String email, String password) async {
-    return client.post(AppUrls.loginUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
-    //return client.get(AppUrls.loginUrl);
+    //return client.post(AppUrls.loginUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
+    return client.get(AppUrls.loginUrl);
   }
 
   static Future<http.Response> userSignUp(http.Client client, String firstName, String lastName, String email, String password) async {

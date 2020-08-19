@@ -13,13 +13,12 @@ class DeviceModel {
   int maxPhUplevel;
   int currentPhDownLevel;
   int maxPhDownLevel;
-  TrayModel currentTray;
-  List<TrayModel> traysList;
 
   static DeviceModel currentDevice = DeviceModel();
 
   DeviceModel({this.deviceCode});
-  DeviceModel.fromMap({this.deviceCode, this.maxWaterLevel, this.maxNSLevel, this.maxPhUplevel, this.maxPhDownLevel});
+  DeviceModel.fromMap({this.deviceCode, this.maxWaterLevel, this.maxNSLevel, this.maxPhUplevel, this.maxPhDownLevel,
+  this.currentWaterLevel, this.currentNSLevel, this.currentPhUpLevel, this.currentPhDownLevel});
 
   factory DeviceModel.fromJson(Map<String, dynamic> json) {
     return DeviceModel.fromMap(
@@ -28,12 +27,16 @@ class DeviceModel {
       maxNSLevel: json['maxNSLevel'] as int,
       maxPhUplevel: json['maxPhUplevel'] as int,
       maxPhDownLevel: json['maxPhDownLevel'] as int,
+      currentWaterLevel: json['currentWaterLevel'] as int,
+      currentNSLevel: json['currentNSLevel'] as int,
+      currentPhUpLevel: json['currentPhUpLevel'] as int,
+      currentPhDownLevel: json['currentPhDownLevel'] as int,
     );
   }
 
   static Future<void> getMeasurements() async{
     //TODO: implement get measurements
-    if(true){
+    if(false){
       currentDevice.currentWaterLevel = Random().nextInt(100);
       currentDevice.currentNSLevel = Random().nextInt(100);
       currentDevice.currentPhUpLevel = Random().nextInt(100);
@@ -44,6 +47,22 @@ class DeviceModel {
       await DeviceStorage.readCurrentMeasurements();
     }
 
+  }
+
+  static loadCurrentDevice() {
+//    currentDevice = DeviceModel.fromMap(
+//      deviceCode: "8999",
+//      maxWaterLevel: 100,
+//      maxNSLevel: 100,
+//      maxPhUplevel: 100,
+//      maxPhDownLevel: 100,
+//      currentWaterLevel: 100,
+//      currentNSLevel: 100,
+//      currentPhUpLevel: 100,
+//      currentPhDownLevel: 100,
+//    );
+    DeviceStorage.readDevice();
+    DeviceStorage.deleteDevice();
   }
 
   static bool changeLightsState(){
