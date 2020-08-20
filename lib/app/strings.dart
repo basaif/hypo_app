@@ -91,6 +91,10 @@ class AppStrings {
   static const String measurementsError = "Could not update measurements.";
   static const String readingsError = "Could not update readings.";
 
+  //feedback messages
+  static const String lightsChanged = "Lights state changed.";
+  static const String waterPumpChanged = "Water pump state changed.";
+
   //warning messages
   static const String endCycleWarning = "You should only end cycle if you have removed your plants from your device. Are you sure you want to proceed?";
   static const String proceed = "PROCEED";

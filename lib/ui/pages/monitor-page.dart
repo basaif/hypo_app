@@ -99,7 +99,8 @@ class MonitorContentState extends State<MonitorContent> {
                     _loadHome();
                   });
                 },
-                child:Card(
+                child:
+               Card(
                   margin: EdgeInsets.only(bottom: 30),
                   elevation: 5,
                   child: Row(
@@ -259,6 +260,7 @@ class MonitorContentState extends State<MonitorContent> {
                     _loadHome();
                   });
                 },
+
                 child:Card(
                   margin: EdgeInsets.only(bottom: 30),
                   elevation: 5,

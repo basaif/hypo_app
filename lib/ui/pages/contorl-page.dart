@@ -66,11 +66,19 @@ class ControlContent extends StatelessWidget {
                             height: 45.0,
                             child: RaisedButton(
                               padding: EdgeInsets.all(5.0),
-                              onPressed: () {
-                                if (!DeviceModel.changeWaterPumpState()) {
+                              onPressed: () async{
+                                bool canChangePump = await DeviceModel.changeWaterPumpState();
+                                if (!canChangePump) {
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text(AppStrings.generalError),
                                     duration: Duration(seconds: 3),
+                                  ));
+                                }
+                                else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(AppStrings.waterPumpChanged),
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: ColorSets.primaryGreen,
                                   ));
                                 }
                               },
@@ -115,11 +123,19 @@ class ControlContent extends StatelessWidget {
                             height: 45.0,
                             child: RaisedButton(
                               padding: EdgeInsets.all(5.0),
-                              onPressed: () {
-                                if (!DeviceModel.changeLightsState()) {
+                              onPressed: () async{
+                                bool canChangeLights = await DeviceModel.changeLightsState();
+                                if (!canChangeLights) {
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text(AppStrings.generalError),
                                     duration: Duration(seconds: 3),
+                                  ));
+                                }
+                                else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(AppStrings.lightsChanged),
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: ColorSets.primaryGreen,
                                   ));
                                 }
                               },

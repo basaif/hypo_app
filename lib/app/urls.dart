@@ -12,8 +12,8 @@ static String startGrowingUrl = baseUrl + "start-growing.json";
 static String endGrowingUrl = baseUrl + "end-growing.json";
 static String getTrayReadingsUrl = baseUrl + "readings.json";
 
-static String changeLightsUrl = baseUrl + "";
-static String changeWaterPumpUrl = baseUrl + "";
+static String changeLightsUrl = baseUrl + "lights.json";
+static String changeWaterPumpUrl = baseUrl + "pump.json";
 
 static String updateUserInfoUrl = baseUrl + "";
 static String changePasswordUrl = baseUrl + "";

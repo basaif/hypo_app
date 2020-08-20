@@ -73,14 +73,25 @@ class DeviceModel {
     DeviceStorage.readDevice();
   }
 
-  static bool changeLightsState(){
-    //TODO: implement changeLightsState
-    return true;
+  static Future<bool> changeLightsState() async{
+    bool result = await DataHandler.lightsStateHandler(currentDevice.deviceCode);
+    if(result){
+      return true;
+    }
+    else{
+      return false;
+    }
+
   }
 
-  static bool changeWaterPumpState(){
-    //TODO: implement changeWaterPumpState
-    return true;
+  static Future<bool> changeWaterPumpState() async{
+    bool result = await DataHandler.waterPumpStateHandler(currentDevice.deviceCode);
+    if(result){
+      return true;
+    }
+    else{
+      return false;
+    }
 
   }
 }

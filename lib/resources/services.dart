@@ -56,10 +56,12 @@ class ApiServices{
 
   static Future<http.Response> changeLightsState(http.Client client, String deviceCode) async {
     return client.post(AppUrls.changeLightsUrl, body: jsonEncode(<String, String>{"deviceCode": deviceCode}));
+    //return client.get(AppUrls.changeLightsUrl);
   }
 
   static Future<http.Response> changeWaterPumpState(http.Client client, String deviceCode) async {
     return client.post(AppUrls.changeWaterPumpUrl, body: jsonEncode(<String, String>{"deviceCode": deviceCode}));
+    //return client.get(AppUrls.changeWaterPumpUrl);
   }
 
   static Future<http.Response> updateUserInfo(http.Client client, String firstName, String lastName, String email) async {

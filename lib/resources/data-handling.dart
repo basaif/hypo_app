@@ -120,6 +120,26 @@ class DataHandler{
     }
   }
 
+  static Future<bool> lightsStateHandler(String deviceCode) async{
+    http.Response response = await ApiServices.changeLightsState(http.Client(), deviceCode);
+    if(response.statusCode == 201){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  static Future<bool> waterPumpStateHandler(String deviceCode) async{
+    http.Response response = await ApiServices.changeWaterPumpState(http.Client(), deviceCode);
+    if(response.statusCode == 201){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
 
 
 

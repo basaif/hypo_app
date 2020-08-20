@@ -32,13 +32,10 @@ class ReadingsModel {
       await TrayStorage.readTrayData();
       return false;
     }
-
   }
-
 }
 
 enum ReadingType {
   EC,
   pH
-
 }
