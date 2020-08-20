@@ -60,7 +60,7 @@ class ContentState extends State<Content> {
     }
     else{
       if (AppState.isGrowing){
-        await TrayModel.getCurrentTray();
+        bool canGetReadings = await TrayModel.getCurrentTray();
         if(TrayModel.currentTray.startDate == null){
           setState(() {
             _body = Center(child: CircularProgressIndicator(),);
@@ -70,6 +70,11 @@ class ContentState extends State<Content> {
           setState(() {
             _body = ActiveHomeContent();
           });
+          if(!canGetReadings){
+            Scaffold.of(context).showSnackBar(
+                SnackBar(content: Text(AppStrings.readingsError), duration: Duration(seconds: 3),)
+            );
+          }
         }
 
       }
@@ -195,7 +200,7 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
               FlatButton(
                 child: Text(AppStrings.cancel, style: AppTextStyles.warningButton,),
                 onPressed: () {
-
+                  Navigator.of(context).pop();
                 },
               ),
               FlatButton(

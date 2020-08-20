@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:hypoapp/app-state.dart';
 import 'package:hypoapp/models/device-model.dart';
 import 'package:hypoapp/models/plant-model.dart';
+import 'package:hypoapp/models/readings-model.dart';
 import 'package:hypoapp/models/tray-model.dart';
 import 'package:hypoapp/models/user-model.dart';
 import 'package:hypoapp/resources/services.dart';
@@ -11,7 +12,7 @@ class DataHandler{
 
   static Future<bool> loginHandler(String email, String password) async{
     http.Response response = await ApiServices.userLogin(http.Client(), email, password);
-    if(response.statusCode == 201){
+    if(response.statusCode == 200){
       final parsed = json.decode(response.body);
       UserModel.currentUser = UserModel.fromJson(parsed['user']);
       DeviceModel.currentDevice = DeviceModel.fromJson(parsed['device']);
@@ -99,6 +100,19 @@ class DataHandler{
   static Future<bool> endGrowingHandler(String deviceCode, DateTime endDate) async{
     http.Response response = await ApiServices.endGrowing(http.Client(), deviceCode, endDate);
     if(response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  static Future<bool> getReadings(String deviceCode) async{
+    http.Response response = await ApiServices.getTrayReadings(http.Client(), deviceCode);
+    if(response.statusCode == 200){
+      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+      TrayModel.currentTray.growingData = List<ReadingsModel>();
+      TrayModel.currentTray.growingData = parsed.map<ReadingsModel>((json) => ReadingsModel.fromJson(json)).toList();
       return true;
     }
     else{

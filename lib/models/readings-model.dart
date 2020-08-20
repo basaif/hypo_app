@@ -1,4 +1,8 @@
+import 'dart:async';
 
+import 'package:hypoapp/models/device-model.dart';
+import 'package:hypoapp/resources/data-handling.dart';
+import 'package:hypoapp/resources/tray-storage.dart';
 
 class ReadingsModel {
   int id;
@@ -12,15 +16,23 @@ class ReadingsModel {
   factory ReadingsModel.fromJson(Map<String, dynamic> json) {
     return ReadingsModel(
       id: json['id'] as int,
-      dateOfReading: json['dateOfReading'] as DateTime,
-      readingType: json['readingType'] as ReadingType,
+      dateOfReading: DateTime.parse(json['dateOfReading']),
+      readingType: ReadingType.values.firstWhere((e) => e.toString() == "ReadingType."+json['readingType']),
       value: json['value'] as double,
     );
   }
 
-  static bool getReadings(){
-    //TODO: implement getReadings
-    return true;
+  static Future<bool> getReadings() async{
+    bool result = await DataHandler.getReadings(DeviceModel.currentDevice.deviceCode);
+    if(result){
+      TrayStorage.writeTrayData();
+      return true;
+    }
+    else{
+      await TrayStorage.readTrayData();
+      return false;
+    }
+
   }
 
 }

@@ -46,7 +46,6 @@ class TrayModel{
      currentTray.growingPlant = plant;
      currentTray.growingData = List<ReadingsModel>();
      TrayStorage.writeTray();
-     TrayStorage.writeTrayData();
     return true;
   }
   else{
@@ -55,8 +54,7 @@ class TrayModel{
 
   }
 
-  static Future<void> getCurrentTray() async{
-    //TODO: implement getCurrentTray
+  static Future<bool> getCurrentTray() async{
 //    await TrayStorage.readTray();
 //    await TrayStorage.readTrayData();
 //    if(currentTray.growingData.length > 0){
@@ -64,15 +62,22 @@ class TrayModel{
 //    }
 ////    currentTray.growingData = List<ReadingsModel>();
 //        FakeData.populateReadings(currentTray.growingData);
+
   if(AppState.isGrowing){
-      await TrayStorage.readTray();
+    await TrayStorage.readTray();
+    bool canGetReadings = await ReadingsModel.getReadings();
+    if(canGetReadings){
+      TrayStorage.writeTrayData();
+      return true;
+    }
+    else{
       await TrayStorage.readTrayData();
+      return false;
+    }
   }
   else{
-    currentTray.growingData = List<ReadingsModel>();
+   return false;
   }
-
-
   }
 
   static Future<bool> endCycle() async{

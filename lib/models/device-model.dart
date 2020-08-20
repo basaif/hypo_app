@@ -71,7 +71,6 @@ class DeviceModel {
 //      currentPhDownLevel: 100,
 //    );
     DeviceStorage.readDevice();
-    DeviceStorage.deleteDevice();
   }
 
   static bool changeLightsState(){

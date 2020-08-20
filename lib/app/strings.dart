@@ -89,6 +89,7 @@ class AppStrings {
   static const String passwordError = "Password is incorrect";
   static const String generalError = "Something went wrong! Could not connect to the server.";
   static const String measurementsError = "Could not update measurements.";
+  static const String readingsError = "Could not update readings.";
 
   //warning messages
   static const String endCycleWarning = "You should only end cycle if you have removed your plants from your device. Are you sure you want to proceed?";

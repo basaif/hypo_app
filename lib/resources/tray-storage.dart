@@ -103,19 +103,17 @@ class TrayStorage {
 
   static Future<void> writeTrayData() async{
     final rFile = await _localReadingsFile;
-
-    List<String> listOfReadings = await rFile.readAsLines();
-
-    for(int i = listOfReadings.length > 0 ? listOfReadings.length - 1: 0; i < TrayModel.currentTray.growingData.length; i++)
+    String reading = "";
+        for(int i =  0; i < TrayModel.currentTray.growingData.length; i++)
     {
-      String reading = TrayModel.currentTray.growingData[i].dateOfReading.toIso8601String() +
+      reading += TrayModel.currentTray.growingData[i].dateOfReading.toIso8601String() +
           "; " +
           TrayModel.currentTray.growingData[i].value.toString() +
           "; " +
           TrayModel.currentTray.growingData[i].readingType.toString() +
-          "; ";
-      rFile.writeAsStringSync('$reading\n', mode: FileMode.append);
+          "; \n";
     }
+    rFile.writeAsStringSync('$reading');
   }
 
   static Future<void> deleteTrayData() async {

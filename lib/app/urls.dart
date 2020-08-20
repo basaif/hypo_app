@@ -10,7 +10,7 @@ static String getPlantsUrl = baseUrl + "plants.json";
 static String updateDeviceMeasurementsUrl = baseUrl + "update-measurements.json";
 static String startGrowingUrl = baseUrl + "start-growing.json";
 static String endGrowingUrl = baseUrl + "end-growing.json";
-static String getTrayReadingsUrl = baseUrl + "";
+static String getTrayReadingsUrl = baseUrl + "readings.json";
 
 static String changeLightsUrl = baseUrl + "";
 static String changeWaterPumpUrl = baseUrl + "";
