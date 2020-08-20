@@ -7,7 +7,7 @@ static String signUpUrl = baseUrl + "signup.json";
 static String registerDeviceUrl = baseUrl + "register.json";
 
 static String getPlantsUrl = baseUrl + "plants.json";
-static String updateDeviceMeasurementsUrl = baseUrl + "";
+static String updateDeviceMeasurementsUrl = baseUrl + "update-measurements.json";
 static String startGrowingUrl = baseUrl + "";
 static String endGrowingUrl = baseUrl + "";
 static String getTrayReadingsUrl = baseUrl + "";

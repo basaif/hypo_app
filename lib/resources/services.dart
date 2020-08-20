@@ -11,14 +11,14 @@ class ApiServices{
   }
 
   static Future<http.Response> userSignUp(http.Client client, String firstName, String lastName, String email, String password) async {
-    //return client.post(AppUrls.signUpUrl, body:
-    // jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email, "password": password}));
-    return client.get(AppUrls.signUpUrl);
+    return client.post(AppUrls.signUpUrl, body:
+    jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email, "password": password}));
+    //return client.get(AppUrls.signUpUrl);
   }
 
   static Future<http.Response> registerDevice(http.Client client, String email, String deviceCode) async {
-    //return client.post(AppUrls.registerDeviceUrl, body: jsonEncode(<String, String>{"email": email, "deviceCode": deviceCode}));
-    return client.get(AppUrls.registerDeviceUrl);
+    return client.post(AppUrls.registerDeviceUrl, body: jsonEncode(<String, String>{"email": email, "deviceCode": deviceCode}));
+    //return client.get(AppUrls.registerDeviceUrl);
   }
 
   static Future<http.Response> getPlants(http.Client client) async {
@@ -27,6 +27,7 @@ class ApiServices{
 
   static Future<http.Response> updateDeviceMeasurements(http.Client client, String deviceCode) async {
     return client.post(AppUrls.updateDeviceMeasurementsUrl, body: jsonEncode(<String, String>{"deviceCode": deviceCode}));
+    //return client.get(AppUrls.updateDeviceMeasurementsUrl);
   }
 
   static Future<http.Response> startGrowing(http.Client client, String deviceCode, TrayModel tray) async {

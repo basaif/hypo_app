@@ -33,7 +33,7 @@ class DataHandler{
 
   static Future<bool> signupHandler(String firstName, String lastName, String email, String password) async{
     http.Response response = await ApiServices.userSignUp(http.Client(), firstName, lastName, email, password);
-    if(response.statusCode == 200){
+    if(response.statusCode == 201){
       return true;
     }
     else{
@@ -44,11 +44,28 @@ class DataHandler{
 
   static Future<bool> registeringHandler(String email, String deviceCode) async{
     http.Response response = await ApiServices.registerDevice(http.Client(), email, deviceCode);
-    if(response.statusCode == 200){
+    if(response.statusCode == 201){
 
       final parsed = json.decode(response.body);
       DeviceModel.currentDevice = DeviceModel.fromJson(parsed);
       DeviceModel.currentDevice.deviceCode = deviceCode;
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+
+  static Future<bool> measurementsHandler(String deviceCode) async{
+    http.Response response = await ApiServices.updateDeviceMeasurements(http.Client(), deviceCode);
+    if(response.statusCode == 201){
+
+      final parsed = json.decode(response.body);
+      DeviceModel.currentDevice.currentWaterLevel = parsed["currentWaterLevel"];
+      DeviceModel.currentDevice.currentNSLevel = parsed["currentNSLevel"];
+      DeviceModel.currentDevice.currentPhUpLevel = parsed["currentPhUpLevel"];
+      DeviceModel.currentDevice.currentPhDownLevel = parsed["currentPhDownLevel"];
       return true;
     }
     else{
