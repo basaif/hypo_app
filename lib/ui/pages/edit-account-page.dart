@@ -154,10 +154,11 @@ class EditAccountFormState extends State<EditAccountForm> {
                     height: 70.0,
                     child: RaisedButton(
                       padding: EdgeInsets.all(20.0),
-                      onPressed: () {
+                      onPressed: () async{
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          if(UserModel.editUserInfo(firstName, lastName, email)){
+                          bool canUpdateUserInfo = await UserModel.editUserInfo(firstName, lastName, email);
+                          if(canUpdateUserInfo){
                             Navigator.of(context).pop();
                           }
                           else{

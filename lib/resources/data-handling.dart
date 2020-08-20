@@ -140,6 +140,26 @@ class DataHandler{
     }
   }
 
+  static Future<bool> updateUserInfoHandler(String firstName, String lastName, String email) async{
+    http.Response response = await ApiServices.updateUserInfo(http.Client(), firstName, lastName, email);
+    if(response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  static Future<bool> changePasswordHandler(String email, String password) async{
+    http.Response response = await ApiServices.changePassword(http.Client(), email, password);
+    if(response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
 
 
 

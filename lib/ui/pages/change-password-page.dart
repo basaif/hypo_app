@@ -149,10 +149,11 @@ class ChangePasswordFormState extends State<ChangePasswordForm> {
                       height: 70.0,
                       child: RaisedButton(
                         padding: EdgeInsets.all(20.0),
-                        onPressed: () {
+                        onPressed: () async{
                           // Validate returns true if the form is valid, otherwise false.
                           if (_formKey.currentState.validate()) {
-                            if(UserModel.changePassword(newPassword)){
+                            bool canChangePassword = await UserModel.changePassword(newPassword);
+                            if(canChangePassword){
                               Navigator.of(context).pop();
                             }
                             else{

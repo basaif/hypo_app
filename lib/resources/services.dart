@@ -65,11 +65,14 @@ class ApiServices{
   }
 
   static Future<http.Response> updateUserInfo(http.Client client, String firstName, String lastName, String email) async {
-    return client.post(AppUrls.updateUserInfoUrl, body: jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email}));
+    //return client.post(AppUrls.updateUserInfoUrl,
+    // body: jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email}));
+    return client.get(AppUrls.updateUserInfoUrl);
   }
 
   static Future<http.Response> changePassword(http.Client client, String email, String password) async {
-    return client.post(AppUrls.changePasswordUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
+    //return client.post(AppUrls.changePasswordUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
+    return client.get(AppUrls.changePasswordUrl);
   }
 
 }

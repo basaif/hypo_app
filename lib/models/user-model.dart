@@ -17,7 +17,12 @@ class UserModel {
 
   UserModel(this.firstName, this.lastName, this.emailAddress, this.password);
 
-  UserModel.fromMap({this.firstName, this.lastName, this.emailAddress, this.password, this.id});
+  UserModel.fromMap(
+      {this.firstName,
+      this.lastName,
+      this.emailAddress,
+      this.password,
+      this.id});
 
   UserModel.init();
 
@@ -28,75 +33,94 @@ class UserModel {
     );
   }
 
-  static Future<bool> login(String email, String password)async{
+  static Future<bool> login(String email, String password) async {
 //    currentUser = UserModel("Jimmy", "Kimmel", email, password);
 //    UserStorage.writeUser();
 //    return true;
 
     bool result = await DataHandler.loginHandler(email, password);
-    if (result){
+    if (result) {
       currentUser.emailAddress = email;
       currentUser.password = password;
       UserStorage.writeUser();
       DeviceStorage.writeCurrentMeasurements();
       DeviceStorage.writeDevice();
       return result;
-    }
-    else{
+    } else {
       return result;
     }
-
   }
 
-  static void recoverPassword(String email){
+  static void recoverPassword(String email) {
     //TODO: implement recover password
   }
 
-  static Future<bool> signUp(String firstName, String lastName, String email, String password)async{
+  static Future<bool> signUp(
+      String firstName, String lastName, String email, String password) async {
 //    currentUser = UserModel(firstName, lastName, email, password);
 //    UserStorage.writeUser();
 //    return true;
-    bool result = await DataHandler.signupHandler(firstName, lastName, email, password);
-    if (result){
+    bool result =
+        await DataHandler.signupHandler(firstName, lastName, email, password);
+    if (result) {
       currentUser = UserModel(firstName, lastName, email, password);
       UserStorage.writeUser();
       return result;
-    }
-    else{
+    } else {
       return result;
     }
   }
 
-  static Future<bool> registerDevice(String email, String deviceCode)async{
+  static Future<bool> registerDevice(String email, String deviceCode) async {
     bool result = await DataHandler.registeringHandler(email, deviceCode);
-    if (result){
+    if (result) {
       DeviceStorage.writeDevice();
       DeviceStorage.writeCurrentMeasurements();
 
       return result;
-    }
-    else{
+    } else {
       return result;
     }
   }
 
-  static bool editUserInfo(String firstName, String lastName, String email){
-    //TODO: implement editUserInfo
-    currentUser.firstName = firstName;
-    currentUser.lastName = lastName;
-    currentUser.emailAddress = email;
-    UserStorage.writeUser();
-    return true;
+  static Future<bool> editUserInfo(
+      String firstName, String lastName, String email) async {
+//    currentUser.firstName = firstName;
+//    currentUser.lastName = lastName;
+//    currentUser.emailAddress = email;
+//    UserStorage.writeUser();
+//    return true;
+    bool result =
+        await DataHandler.updateUserInfoHandler(firstName, lastName, email);
+    if (result) {
+      currentUser.firstName = firstName;
+      currentUser.lastName = lastName;
+      currentUser.emailAddress = email;
+      UserStorage.writeUser();
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
-  static bool changePassword(String newPassword){
-    //TODO: implement changePassword
+  static Future<bool> changePassword(String newPassword) async{
+//    currentUser.password = newPassword;
+//    UserStorage.writeUser();
+//    return true;
+    bool result =
+        await DataHandler.changePasswordHandler(currentUser.emailAddress, newPassword);
+    if (result) {
     currentUser.password = newPassword;
     UserStorage.writeUser();
-    return true;
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
-  static logout(){
+  static logout() {
     currentUser = UserModel.init();
     AppState.setStateLogged(false);
     AppState.setStateGrowing(false);
@@ -108,9 +132,8 @@ class UserModel {
   }
 
   static loadCurrentUser() {
-   //currentUser = UserModel("Sophie", "Scott", "sophie@scott.com", "23122");
+    //currentUser = UserModel("Sophie", "Scott", "sophie@scott.com", "23122");
     UserStorage.readUser();
     DeviceModel.loadCurrentDevice();
   }
-
 }
