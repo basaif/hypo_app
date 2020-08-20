@@ -195,10 +195,12 @@ class SignUpFormState extends State<SignUpForm> {
                     height: 70.0,
                     child: RaisedButton(
                       padding: EdgeInsets.all(20.0),
-                      onPressed: () {
+                      onPressed: () async{
+
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          if (UserModel.signUp(firstName, lastName, email, password)){
+                          bool couldSignup = await UserModel.signUp(firstName, lastName, email, password);
+                          if (couldSignup){
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => RegisterDevicePage(email: email)),

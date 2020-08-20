@@ -11,7 +11,7 @@ class DataHandler{
 
   static Future<bool> loginHandler(String email, String password) async{
     http.Response response = await ApiServices.userLogin(http.Client(), email, password);
-    if(response.statusCode == 200){
+    if(response.statusCode == 201){
       final parsed = json.decode(response.body);
       UserModel.currentUser = UserModel.fromJson(parsed['user']);
       DeviceModel.currentDevice = DeviceModel.fromJson(parsed['device']);
@@ -23,6 +23,32 @@ class DataHandler{
         TrayModel.currentTray = TrayModel.fromJson(parsed['tray']);
       }
 
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+
+  static Future<bool> signupHandler(String firstName, String lastName, String email, String password) async{
+    http.Response response = await ApiServices.userSignUp(http.Client(), firstName, lastName, email, password);
+    if(response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+
+  static Future<bool> registeringHandler(String email, String deviceCode) async{
+    http.Response response = await ApiServices.registerDevice(http.Client(), email, deviceCode);
+    if(response.statusCode == 200){
+
+      final parsed = json.decode(response.body);
+      DeviceModel.currentDevice = DeviceModel.fromJson(parsed);
+      DeviceModel.currentDevice.deviceCode = deviceCode;
       return true;
     }
     else{

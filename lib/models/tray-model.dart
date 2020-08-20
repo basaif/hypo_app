@@ -1,5 +1,6 @@
 
 //import 'package:hypoapp/fake-data.dart';
+import 'package:hypoapp/app-state.dart';
 import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/models/readings-model.dart';
 import 'package:hypoapp/resources/tray-storage.dart';
@@ -49,7 +50,14 @@ class TrayModel{
 //    }
 ////    currentTray.growingData = List<ReadingsModel>();
 //        FakeData.populateReadings(currentTray.growingData);
+  if(AppState.isGrowing){
+      await TrayStorage.readTray();
+      await TrayStorage.readTrayData();
+  }
+  else{
     currentTray.growingData = List<ReadingsModel>();
+  }
+
 
   }
 

@@ -6,16 +6,19 @@ import 'dart:convert';
 class ApiServices{
 
   static Future<http.Response> userLogin(http.Client client, String email, String password) async {
-    //return client.post(AppUrls.loginUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
-    return client.get(AppUrls.loginUrl);
+    return client.post(AppUrls.loginUrl, body: jsonEncode(<String, String>{"email": email, "password": password}));
+    //return client.get(AppUrls.loginUrl);
   }
 
   static Future<http.Response> userSignUp(http.Client client, String firstName, String lastName, String email, String password) async {
-    return client.post(AppUrls.signUpUrl, body: jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email, "password": password}));
+    //return client.post(AppUrls.signUpUrl, body:
+    // jsonEncode(<String, String>{"firstName": firstName, "lastName": lastName, "email": email, "password": password}));
+    return client.get(AppUrls.signUpUrl);
   }
 
   static Future<http.Response> registerDevice(http.Client client, String email, String deviceCode) async {
-    return client.post(AppUrls.registerDeviceUrl, body: jsonEncode(<String, String>{"email": email, "deviceCode": deviceCode}));
+    //return client.post(AppUrls.registerDeviceUrl, body: jsonEncode(<String, String>{"email": email, "deviceCode": deviceCode}));
+    return client.get(AppUrls.registerDeviceUrl);
   }
 
   static Future<http.Response> getPlants(http.Client client) async {

@@ -109,10 +109,11 @@ class RegisterDeviceFormState extends State<RegisterDeviceForm> {
                     height: 70.0,
                     child: RaisedButton(
                       padding: EdgeInsets.all(20.0),
-                      onPressed: () {
+                      onPressed: () async{
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState.validate()) {
-                          if (UserModel.registerDevice(email, deviceCode)){
+                          bool couldRegister = await UserModel.registerDevice(email, deviceCode);
+                          if (couldRegister){
                             AppState.setStateLogged(true);
                             Navigator.pushReplacement(
                               context,

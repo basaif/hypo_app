@@ -52,17 +52,32 @@ class UserModel {
     //TODO: implement recover password
   }
 
-  static bool signUp(String firstName, String lastName, String email, String password){
-    //TODO: implement signUp
-    currentUser = UserModel(firstName, lastName, email, password);
-    UserStorage.writeUser();
-    return true;
+  static Future<bool> signUp(String firstName, String lastName, String email, String password)async{
+//    currentUser = UserModel(firstName, lastName, email, password);
+//    UserStorage.writeUser();
+//    return true;
+    bool result = await DataHandler.signupHandler(firstName, lastName, email, password);
+    if (result){
+      currentUser = UserModel(firstName, lastName, email, password);
+      UserStorage.writeUser();
+      return result;
+    }
+    else{
+      return result;
+    }
   }
 
-  static bool registerDevice(String email, String deviceCode){
-    //TODO: implement registerDevice
+  static Future<bool> registerDevice(String email, String deviceCode)async{
+    bool result = await DataHandler.registeringHandler(email, deviceCode);
+    if (result){
+      DeviceStorage.writeDevice();
+      DeviceStorage.writeCurrentMeasurements();
 
-    return true;
+      return result;
+    }
+    else{
+      return result;
+    }
   }
 
   static bool editUserInfo(String firstName, String lastName, String email){

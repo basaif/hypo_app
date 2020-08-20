@@ -3,8 +3,8 @@ class AppUrls{
   static final String baseUrl = "http://192.168.1.109:8000/";
 
 static String loginUrl = baseUrl + "login.json";
-static String signUpUrl = baseUrl + "";
-static String registerDeviceUrl = baseUrl + "";
+static String signUpUrl = baseUrl + "signup.json";
+static String registerDeviceUrl = baseUrl + "register.json";
 
 static String getPlantsUrl = baseUrl + "plants.json";
 static String updateDeviceMeasurementsUrl = baseUrl + "";
