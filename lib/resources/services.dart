@@ -31,19 +31,22 @@ class ApiServices{
   }
 
   static Future<http.Response> startGrowing(http.Client client, String deviceCode, TrayModel tray) async {
-    return client.post(AppUrls.startGrowingUrl,
-        body: jsonEncode(<String, dynamic>{
-      "deviceCode": deviceCode,
-      "startDate": tray.startDate,
-      "growingPlant" : {
-        "groupName": tray.growingPlant.groupName,
-        "description": tray.growingPlant.description,
-        "image": tray.growingPlant.imageLocation
-      }}));
+//    return client.post(AppUrls.startGrowingUrl,
+//        body: jsonEncode(<String, dynamic>{
+//      "deviceCode": deviceCode,
+//          "tray": {
+//              "startDate": tray.startDate.toIso8601String(),
+//              "growingPlant" : {
+//                  "groupName": tray.growingPlant.groupName,
+//                  "description": tray.growingPlant.description,
+//                  "image": tray.growingPlant.imageLocation
+//      }}}));
+    return client.get(AppUrls.startGrowingUrl);
   }
 
   static Future<http.Response> endGrowing(http.Client client, String deviceCode, DateTime endDate) async {
-    return client.post(AppUrls.endGrowingUrl, body: jsonEncode(<String, dynamic>{"deviceCode": deviceCode, "endDate": endDate}));
+    //return client.post(AppUrls.endGrowingUrl, body: jsonEncode(<String, dynamic>{"deviceCode": deviceCode, "endDate": endDate.toIso8601String()}));
+    return client.get(AppUrls.endGrowingUrl);
   }
 
   static Future<http.Response> getTrayReadings(http.Client client, String deviceCode) async {

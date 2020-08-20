@@ -1,6 +1,6 @@
-import 'dart:math';
+//import 'dart:math';
 
-import 'package:hypoapp/models/tray-model.dart';
+//import 'package:hypoapp/models/tray-model.dart';
 import 'package:hypoapp/resources/data-handling.dart';
 import 'package:hypoapp/resources/device-storage.dart';
 
@@ -35,8 +35,7 @@ class DeviceModel {
     );
   }
 
-  static Future<void> getMeasurements() async{
-    //TODO: implement get measurements
+  static Future<bool> getMeasurements() async{
 //    if(false){
 //      currentDevice.currentWaterLevel = Random().nextInt(100);
 //      currentDevice.currentNSLevel = Random().nextInt(100);
@@ -50,9 +49,11 @@ class DeviceModel {
   bool result = await DataHandler.measurementsHandler(currentDevice.deviceCode);
   if(result){
     DeviceStorage.writeCurrentMeasurements();
+    return true;
   }
   else{
     await DeviceStorage.readCurrentMeasurements();
+    return false;
   }
 
   }

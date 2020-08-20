@@ -195,21 +195,31 @@ class ActiveHomeContentState extends State<ActiveHomeContent> {
               FlatButton(
                 child: Text(AppStrings.cancel, style: AppTextStyles.warningButton,),
                 onPressed: () {
-                  Navigator.of(context).pop();
+
                 },
               ),
               FlatButton(
                 child: Text(AppStrings.proceed, style: AppTextStyles.warningButtonRed,),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    AppState.setStateGrowing(false);
-                    TrayModel.endCycle();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => AppSkeleton()),
+                onPressed: () async{
+                  bool canEndCycle = await TrayModel.endCycle();
+                  if(canEndCycle){
+                    Navigator.of(context).pop();
+                    setState(() {
+                      AppState.setStateGrowing(false);
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => AppSkeleton()),
+                      );
+                    });
+                  }
+                  else{
+                    Navigator.of(context).pop();
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
                     );
-                  });
+                  }
+
                 },
               ),
             ],

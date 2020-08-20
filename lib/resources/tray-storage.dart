@@ -123,4 +123,9 @@ class TrayStorage {
     rFile.writeAsStringSync("");
   }
 
+  static Future<void> deleteTray() async {
+    final file = await _localFile;
+    file.writeAsStringSync("");
+  }
+
 }

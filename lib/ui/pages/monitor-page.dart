@@ -48,7 +48,7 @@ class MonitorContentState extends State<MonitorContent> {
   String phDownBuffer;
 
   void _loadHome() async{
-    await DeviceModel.getMeasurements();
+    bool canGetMeasurements = await DeviceModel.getMeasurements();
     if(DeviceModel.currentDevice.currentWaterLevel == null){
       setState(() {
         _body = Center(child: CircularProgressIndicator(),);
@@ -62,6 +62,11 @@ class MonitorContentState extends State<MonitorContent> {
         phDownBuffer = DeviceModel.currentDevice.currentPhDownLevel.toString();
         _body = _loadedBody();
       });
+      if(!canGetMeasurements){
+        Scaffold.of(context).showSnackBar(
+            SnackBar(content: Text(AppStrings.measurementsError), duration: Duration(seconds: 3),)
+        );
+      }
       }
     }
 

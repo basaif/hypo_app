@@ -86,6 +86,26 @@ class DataHandler{
 
   }
 
+  static Future<bool> startGrowingHandler(String deviceCode, DateTime startDate, PlantModel plant) async{
+    http.Response response = await ApiServices.startGrowing(http.Client(), deviceCode, TrayModel(startDate: startDate, growingPlant: plant));
+    if(response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  static Future<bool> endGrowingHandler(String deviceCode, DateTime endDate) async{
+    http.Response response = await ApiServices.endGrowing(http.Client(), deviceCode, endDate);
+    if(response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
 
 
 

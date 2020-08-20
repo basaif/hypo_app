@@ -161,18 +161,27 @@ class ChoosePlantContentState extends State<ChoosePlantContent> {
           height: 70.0,
           child: RaisedButton(
             padding: EdgeInsets.all(20.0),
-            onPressed: list.any((item) => item.isSelected) ?  () {
+            onPressed: list.any((item) => item.isSelected) ?  () async{
               PlantModel plant = PlantModel.init();
               list.forEach((item) => item.isSelected ? plant = item.data : null);
-              TrayModel.startGrowing(DateTime.now(), plant);
+              bool canStartGrowing = await TrayModel.startGrowing(DateTime.now(), plant);
 
-              setState(() {
-                AppState.setStateGrowing(true);
-              });
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => HypoApp()),
-              );
+              if (canStartGrowing){
+                setState(() {
+                  AppState.setStateGrowing(true);
+                });
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HypoApp()),
+                );
+              }
+              else{
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text(AppStrings.generalError), duration: Duration(seconds: 3),)
+                );
+              }
+
+
               //Navigator.of(context).pop();
             } : null,
             child: Text(

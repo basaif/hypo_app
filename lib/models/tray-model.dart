@@ -1,8 +1,10 @@
 
 //import 'package:hypoapp/fake-data.dart';
 import 'package:hypoapp/app-state.dart';
+import 'package:hypoapp/models/device-model.dart';
 import 'package:hypoapp/models/plant-model.dart';
 import 'package:hypoapp/models/readings-model.dart';
+import 'package:hypoapp/resources/data-handling.dart';
 import 'package:hypoapp/resources/tray-storage.dart';
 
 class TrayModel{
@@ -31,13 +33,25 @@ class TrayModel{
     return typeData;
   }
 
-  static startGrowing(DateTime startDate, PlantModel plant) async{
-     //TODO: implement startGrowing
-     currentTray.startDate = startDate;
+  static Future<bool> startGrowing(DateTime startDate, PlantModel plant) async{
+//     currentTray.startDate = startDate;
+//     currentTray.growingPlant = plant;
+//     currentTray.growingData = List<ReadingsModel>();
+//     await TrayStorage.writeTray();
+//     await TrayStorage.writeTrayData();
+
+  bool result = await DataHandler.startGrowingHandler(DeviceModel.currentDevice.deviceCode, startDate, plant);
+  if(result){
+    currentTray.startDate = startDate;
      currentTray.growingPlant = plant;
      currentTray.growingData = List<ReadingsModel>();
-     await TrayStorage.writeTray();
-     await TrayStorage.writeTrayData();
+     TrayStorage.writeTray();
+     TrayStorage.writeTrayData();
+    return true;
+  }
+  else{
+    return false;
+  }
 
   }
 
@@ -61,11 +75,23 @@ class TrayModel{
 
   }
 
-  static endCycle() async{
-    //TODO: implement endCycle
-    currentTray.endDate = DateTime.now();
-    currentTray = TrayModel();
-    await TrayStorage.deleteTrayData();
+  static Future<bool> endCycle() async{
+
+//    currentTray.endDate = DateTime.now();
+//    currentTray = TrayModel();
+//    await TrayStorage.deleteTrayData();
+    bool result = await DataHandler.endGrowingHandler(DeviceModel.currentDevice.deviceCode, DateTime.now());
+    if(result){
+      currentTray.endDate = DateTime.now();
+      currentTray = TrayModel();
+      AppState.setStateGrowing(false);
+      TrayStorage.deleteTrayData();
+      TrayStorage.deleteTray();
+      return true;
+    }
+    else{
+      return false;
+    }
 
   }
 
